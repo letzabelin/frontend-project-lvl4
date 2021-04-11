@@ -8,7 +8,7 @@ const Message = ({ message: { text } }) => {
   return (
     <li>
       {username}: {text}
-    </li>;
+    </li>
   );
 };
 
