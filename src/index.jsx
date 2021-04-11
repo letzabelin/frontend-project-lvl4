@@ -16,7 +16,7 @@ export default (gon) => {
   const root = document.getElementById('chat');
   const { channels, currentChannelId, messages } = gon;
   const preloadedState = {
-    channels, currentChannelId, messages
+    channels, currentChannelId, messages,
   };
 
   const username = faker.name.findName();
@@ -27,7 +27,7 @@ export default (gon) => {
 
   const store = configureStore({
     reducer,
-    preloadedState
+    preloadedState,
   });
 
   ReactDOM.render(
@@ -36,6 +36,6 @@ export default (gon) => {
         <App />
       </UserContext.Provider>
     </Provider>,
-    root
+    root,
   );
 };

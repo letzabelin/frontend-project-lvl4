@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Row, Col, } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 import { Channels, Messages, Form } from '../index.js';
 
 const Chat = () => {
-  const { channels, messages } = useSelector((state) => state);
+  const { messages } = useSelector((state) => state);
 
   return (
     <Row className="h-100">

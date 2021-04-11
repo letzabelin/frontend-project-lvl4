@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
-import moduleName from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Form as BForm,
@@ -46,7 +45,7 @@ const Form = () => {
           value={formik.values.text}
         />
         <InputGroup.Append>
-          <Button variant="outline-success" type="submit" style={{ minWidth: "80px" }}>
+          <Button variant="outline-success" type="submit" style={{ minWidth: '80px' }}>
             Sent
           </Button>
         </InputGroup.Append>
