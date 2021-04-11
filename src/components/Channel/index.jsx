@@ -1,10 +1,15 @@
-import React from 'react';
-import { Nav } from 'react-bootstrap';
+// @ts-check
 
-const Channel = ({ name }) => {
+import React from 'react';
+import { Nav, Button } from 'react-bootstrap';
+
+const Channel = ({ name, id, currentChannelId }) => {
+  const isActiveChannel = id === currentChannelId;
+  const buttonVariant = isActiveChannel ? 'primary' : 'light';
+
   return (
     <Nav.Item>
-      <Nav.Link>
+      <Nav.Link as={Button} variant={buttonVariant} className="mb-1 w-100">
         { name }
       </Nav.Link>
     </Nav.Item>
