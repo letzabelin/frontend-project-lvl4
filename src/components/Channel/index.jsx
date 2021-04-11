@@ -3,8 +3,8 @@
 import React from 'react';
 import { Nav, Button } from 'react-bootstrap';
 
-const Channel = ({ channel }) => {
-  const { id, name, currentChannelId } = channel;
+const Channel = ({ channel, currentChannelId }) => {
+  const { id, name } = channel;
   const isActiveChannel = id === currentChannelId;
   const buttonVariant = isActiveChannel ? 'primary' : 'light';
 
