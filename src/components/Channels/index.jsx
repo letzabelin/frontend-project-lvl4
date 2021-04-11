@@ -7,8 +7,7 @@ import { Nav } from 'react-bootstrap';
 import { Channel } from '../index.js';
 
 const Channels = () => {
-  const data = useSelector((state) => state);
-  const { channels, currentChannelId } = data;
+  const channels = useSelector((state) => state.channels);
 
   return (
     <>
@@ -16,7 +15,7 @@ const Channels = () => {
       <Nav variant="tabs" className="flex-column border-0">
         {
           channels.map((channel) => (
-            <Channel key={channel.id} channel={channel}/>
+            <Channel key={channel.id} channel={channel} />
           ))
         }
       </Nav>
