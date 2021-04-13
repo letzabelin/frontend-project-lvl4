@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+// import { I18nextProvider } from 'react-i18next';
 import faker from 'faker';
 import Cookie from 'js-cookie';
 
@@ -11,6 +12,7 @@ import App from './App.jsx';
 import '../assets/application.scss';
 import reducer from './reducers/index.js';
 import { UserContext } from './context/index.js';
+import './localize.js';
 
 export default (gon) => {
   const root = document.getElementById('chat');
