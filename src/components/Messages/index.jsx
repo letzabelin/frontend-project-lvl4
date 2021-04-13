@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Message } from '../index.js';
+import Message from '../Message/index.jsx';
 
 const Messages = ({ messages }) => (
   <ul>

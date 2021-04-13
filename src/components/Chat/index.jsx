@@ -2,7 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 
-import { Channels, Messages, Form } from '../index.js';
+import Channels from '../Channels/index.jsx';
+import Messages from '../Messages/index.jsx';
+import Form from '../Form/index.jsx';
 
 const Chat = () => {
   const { messages } = useSelector((state) => state);

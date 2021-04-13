@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   Form as BForm,
   FormControl,
@@ -14,6 +15,7 @@ import { actions as messageActions } from '../../reducers/messages.js';
 
 const Form = () => {
   const { currentChannelId } = useSelector((state) => state);
+  const { t } = useTranslation();
   const messageRoute = getRoute.channelMessagesPath(currentChannelId);
   const { addMessage } = messageActions;
   const dispatch = useDispatch();
@@ -46,7 +48,7 @@ const Form = () => {
         />
         <InputGroup.Append>
           <Button variant="outline-success" type="submit" style={{ minWidth: '80px' }}>
-            Sent
+            {t('form.submit')}
           </Button>
         </InputGroup.Append>
       </InputGroup>
