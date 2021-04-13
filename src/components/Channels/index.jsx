@@ -4,7 +4,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Nav } from 'react-bootstrap';
 
-import { Channel } from '../Channel/index.jsx';
+import Channel from '../Channel/index.jsx';
 
 const Channels = () => {
   const { channels, currentChannelId } = useSelector((state) => state);
