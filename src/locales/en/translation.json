@@ -1,3 +1,28 @@
 {
-
+  "form": {
+    "titles": {
+      "registration": "Registration"
+    },
+    "labels": {
+      "username": "Username",
+      "password": "Password",
+      "nickname": "Nickname"
+    },
+    "actions": {
+      "login": "Login",
+      "register": "Register"
+    },
+    "errors": {
+      "usernameOrPassword": "Passwords do not match"
+    },
+    "confirm": {
+      "password": "Confirm password"
+    },
+    "prompts": {
+      "currentLength": "Password must be 3 to 20 characters",
+      "minimumCharacters": "At least 6 characters",
+      "matchPasswords": "Passwords must be the same"
+    },
+    "submit": "Submit"
+  }
 }

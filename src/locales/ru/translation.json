@@ -1,19 +1,28 @@
 {
-  "username": "Имя пользователя",
-  "password": "Пароль",
-  "nickname": "Ваш ник",
-  "login": {
-    "first": "Войти",
-    "second": "Регистрация",
-    "third": "Зарегистрироваться"
-  },
-  "errors": "Неверные имя пользователя или пароль",
-  "registration": "",
-  "confirm": "Подвердите пароль",
-  "submit": "Отправить",
-  "test": {
-    "first": "От 3 до 20 символов",
-    "second": "Не менее 6 символов",
-    "third": "Пароли должны совпадать"
+  "form": {
+    "titles": {
+      "registration": "Регистрация"
+    },
+    "labels": {
+      "username": "Имя пользователя",
+      "password": "Пароль",
+      "nickname": "Ваш ник"
+    },
+    "actions": {
+      "login": "Войти",
+      "register": "Зарегистрироваться"
+    },
+    "errors": {
+      "usernameOrPassword": "Неверные имя пользователя или пароль"
+    },
+    "confirm": {
+      "password": "Подвердите пароль"
+    },
+    "prompts": {
+      "currentLength": "От 3 до 20 символов",
+      "minimumCharacters": "Не менее 6 символов",
+      "matchPasswords": "Пароли должны совпадать"
+    },
+    "submit": "Отправить"
   }
 }
