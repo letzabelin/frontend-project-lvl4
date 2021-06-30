@@ -4,7 +4,14 @@ import UserContext from '../../context/index.js';
 
 const Message = ({ message: { text } }) => {
   const username = useContext(UserContext);
-  const messageText = <span><b>{username}</b>: {text}</span>;
+  const messageText = (
+    <span>
+      <b>{username}</b>
+      :
+      {' '}
+      {text}
+    </span>
+  );
 
   return (
     <li>

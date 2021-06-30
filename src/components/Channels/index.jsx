@@ -15,7 +15,7 @@ const Channels = () => {
       <Nav variant="tabs" className="flex-column border-0">
         {
           channels.map((channel) => (
-            <Channel key={channel.id} channel={channel} currentChannelId={currentChannelId}/>
+            <Channel key={channel.id} channel={channel} currentChannelId={currentChannelId} />
           ))
         }
       </Nav>

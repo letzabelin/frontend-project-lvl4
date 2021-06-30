@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Chat } from './components/index.js';
+import { Chat } from './containers/index.js';
 
 const App = () => <Chat />;
 
