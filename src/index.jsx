@@ -10,15 +10,16 @@ import Cookie from 'js-cookie';
 import App from './App.jsx';
 import '../assets/application.scss';
 import reducer from './reducers/index.js';
-import UserContext from './context/index.js';
+// import UserContext from './context/index.js';
 import './localize.js';
 
-export default (gon) => {
+// export default (gon) => {
+export default () => {
   const root = document.getElementById('chat');
-  const { channels, currentChannelId, messages } = gon;
-  const preloadedState = {
-    channels, currentChannelId, messages,
-  };
+  // const { channels, currentChannelId, messages } = gon;
+  // const preloadedState = {
+  //   channels, currentChannelId, messages,
+  // };
 
   const username = faker.name.findName();
 
@@ -28,14 +29,14 @@ export default (gon) => {
 
   const store = configureStore({
     reducer,
-    preloadedState,
+    // preloadedState,
   });
 
   ReactDOM.render(
     <Provider store={store}>
-      <UserContext.Provider value={Cookie.get('username')}>
+      {/* <UserContext.Provider value={Cookie.get('username')}> */}
         <App />
-      </UserContext.Provider>
+      {/* </UserContext.Provider> */}
     </Provider>,
     root,
   );
