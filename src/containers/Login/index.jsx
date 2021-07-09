@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import {
   Form,
   FloatingLabel,
@@ -59,7 +60,8 @@ const Login = () => {
                 </Row>
               </Card.Body>
               <Card.Footer className="text-center">
-                {t('form.signin.actionQuestion')} {t('form.signin.action')}
+                {t('form.signin.actionQuestion')}{' '}
+                <Link to="/signup">{t('form.signin.action')}</Link>
               </Card.Footer>
             </Card>
           </Col>
