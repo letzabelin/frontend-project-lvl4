@@ -2,6 +2,7 @@
 
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const mode = process.env.NODE_ENV || 'development';
 
@@ -23,6 +24,9 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [{ from: 'assets/static' }],
+    }),
   ],
   module: {
     rules: [
@@ -38,6 +42,17 @@ module.exports = {
           { loader: 'css-loader' },
           { loader: 'postcss-loader' },
           { loader: 'sass-loader' },
+        ],
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+            },
+          },
         ],
       },
     ],

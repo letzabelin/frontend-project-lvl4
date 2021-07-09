@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Form,
   FloatingLabel,
@@ -8,9 +9,11 @@ import {
   Row,
   Col,
   Button,
-} from "react-bootstrap";
+} from 'react-bootstrap';
 
 const Login = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="d-flex flex-column h-100">
       <Navbar className="shadow-sm">
@@ -19,22 +22,46 @@ const Login = () => {
         </Container>
       </Navbar>
 
-      <Container fluid="lg">
+      <Container fluid className="h-100">
         <Row className="justify-content-center align-content-center h-100">
-          <Col>
-            {/* <Form className="p-5"> */}
-            {/*   <FloatingLabel */}
-            {/*     controlId="floatingInput" */}
-            {/*     label="Email address" */}
-            {/*     className="mb-3" */}
-            {/*   > */}
-            {/*     <Form.Control type="email" placeholder="name@example.com" /> */}
-            {/*   </FloatingLabel> */}
-            {/*   <FloatingLabel controlId="floatingPassword" label="Password"> */}
-            {/*     <Form.Control type="password" placeholder="Password" /> */}
-            {/*   </FloatingLabel> */}
-            {/*   <Button type="Submit">Submit</Button> */}
-            {/* </Form> */}
+          <Col xs={12} md={8} xxl={6}>
+            <Card className="shadow">
+              <Card.Body>
+                <Row>
+                  <Col>
+                    <Card.Img src="/assets/images/login.jpg" alt="Log in" />
+                  </Col>
+                  <Col>
+                    <Form className="p-5">
+                      <h1 className="text-center mb-4">
+                        {t('form.signin.title')}
+                      </h1>
+                      <FloatingLabel
+                        controlId="floatingInput"
+                        label={t('form.signin.labels.nickname')}
+                        className="mb-3"
+                      >
+                        <Form.Control type="text" placeholder="nickname" />
+                      </FloatingLabel>
+
+                      <FloatingLabel
+                        controlId="floatingPassword"
+                        label={t('form.common.labels.password')}
+                      >
+                        <Form.Control type="password" placeholder="Password" />
+                      </FloatingLabel>
+
+                      <Button className="w-100 mt-3" variant="outline-primary">
+                        {t('form.signin.submitButton')}
+                      </Button>
+                    </Form>
+                  </Col>
+                </Row>
+              </Card.Body>
+              <Card.Footer className="text-center">
+                {t('form.signin.actionQuestion')} {t('form.signin.action')}
+              </Card.Footer>
+            </Card>
           </Col>
         </Row>
       </Container>

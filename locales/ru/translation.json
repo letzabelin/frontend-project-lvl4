@@ -1,0 +1,32 @@
+{
+  "form": {
+    "signin": {
+      "title": "Авторизация",
+      "labels": {
+        "nickname": "Ваш ник"
+      },
+      "submitButton": "Войти",
+      "error": "Неверные имя пользователя или пароль",
+      "actionQuestion": "Еще не зарегистрированы?",
+      "action": "Зарегистрироваться"
+    },
+    "signup": {
+      "title": "Регистрация",
+      "labels": {
+        "username": "Имя пользователя",
+        "confirmPassword": "Подтвердите пароль"
+      },
+      "submitButton": "Зарегистрироваться",
+      "prompts": {
+        "currentLength": "От 3 до 20 символов",
+        "minimumCharacters": "Не менее 6 символов",
+        "matchPasswords": "Пароли должны совпадать"
+      }
+    },
+    "common": {
+      "labels": {
+        "password": "Пароль"
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "form": {
+    "signin": {
+      "title": "Sign In",
+      "labels": {
+        "nickname": "Nickname"
+      },
+      "submitButton": "Sign In",
+      "error": "Incorrect username or password",
+      "actionQuestion": "Not registered yet?",
+      "action": "Sign up"
+    },
+    "signup": {
+      "title": "Sign Up",
+      "labels": {
+        "username": "Username",
+        "confirmPassword": "Confirm password"
+      },
+      "submitButton": "Sign Up",
+      "prompts": {
+        "currentLength": "Password must be 3 to 20 characters",
+        "minimumCharacters": "At least 6 characters",
+        "matchPasswords": "Passwords must be the same"
+      }
+    },
+    "common": {
+      "labels": {
+        "password": "Password"
+      }
+    }
+  }
+}
