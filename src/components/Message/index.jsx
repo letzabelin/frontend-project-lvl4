@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 
-import UserContext from '../../context/index.js';
+import AuthContext from '../../context/index.js';
 
 const Message = ({ message: { text } }) => {
-  const username = useContext(UserContext);
+  const username = useContext(AuthContext);
   const messageText = (
     <span>
       <b>{username}</b>

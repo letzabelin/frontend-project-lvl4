@@ -56,7 +56,8 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "regenerator-runtime": "^0.13.7",
-    "socket.io": "^3.0.3"
+    "socket.io": "^3.0.3",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",

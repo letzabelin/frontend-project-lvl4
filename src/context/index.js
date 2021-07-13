@@ -1,6 +1,7 @@
+// @ts-check
+
 import { createContext } from 'react';
-import Cookie from 'js-cookie';
 
-const UserContext = createContext({ username: Cookie.get('username') });
+const authContext = createContext({});
 
-export default UserContext;
+export default authContext;

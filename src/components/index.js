@@ -5,3 +5,5 @@ export { default as Channel } from './Channel/index.jsx';
 export { default as Messages } from './Messages/index.jsx';
 export { default as Message } from './Message/index.jsx';
 export { default as Form } from './Form/index.jsx';
+export { default as CommonLayout } from './CommonLayout/index.jsx';
+export { default as NotFoundPage } from './NotFoundPage/index.jsx';

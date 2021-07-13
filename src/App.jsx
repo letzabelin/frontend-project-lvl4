@@ -1,29 +1,74 @@
 // @ts-check
 
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 
-import { Chat, Login, Signup } from './containers/index.js';
+import { Chat, Signin, Signup } from './containers/index.js';
+import { NotFoundPage } from './components/index.js';
 
-const NotFoundPage = () => <div>page not found</div>;
+import authContext from './context/index.js';
+import useAuth from './hooks/index.js';
+
+const AuthProvider = ({ children }) => {
+  const userId = JSON.parse(localStorage.getItem('userId'));
+  const [isSignIn, setSignIn] = useState(!!userId);
+
+  const signIn = () => {
+    setSignIn(true);
+  };
+
+  const signOut = () => {
+    window.localStorage.removeItem('userId');
+    setSignIn(false);
+  };
+
+  return (
+    <authContext.Provider value={{ isSignIn, signIn, signOut }}>
+      {children}
+    </authContext.Provider>
+  );
+};
+
+const PrivateRoute = ({ children, path, exact }) => {
+  const { isSignIn } = useAuth();
+
+  return (
+    <Route
+      exact={exact}
+      path={path}
+      render={({ location }) => (isSignIn ? (
+        children
+      ) : (
+        <Redirect to={{ pathname: '/signin', state: { from: location } }} />
+      ))}
+    />
+  );
+};
 
 const App = () => (
-  <Router>
-    <Switch>
-      <Route exact path="/">
-        <Chat />
-      </Route>
-      <Route path="/login">
-        <Login />
-      </Route>
-      <Route path="/signup">
-        <Signup />
-      </Route>
-      <Route path="*">
-        <NotFoundPage />
-      </Route>
-    </Switch>
-  </Router>
+  <AuthProvider>
+    <Router>
+      <Switch>
+        <PrivateRoute exact path="/">
+          <Chat />
+        </PrivateRoute>
+        <Route path="/signin">
+          <Signin />
+        </Route>
+        <Route path="/signup">
+          <Signup />
+        </Route>
+        <Route path="*">
+          <NotFoundPage />
+        </Route>
+      </Switch>
+    </Router>
+  </AuthProvider>
 );
 
 export default App;

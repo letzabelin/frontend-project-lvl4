@@ -3,12 +3,11 @@
     "signin": {
       "title": "Sign In",
       "labels": {
-        "nickname": "Nickname"
+        "username": "Nickname"
       },
       "submitButton": "Sign In",
       "error": "Incorrect username or password",
-      "actionQuestion": "Not registered yet?",
-      "action": "Sign up"
+      "question": "Not registered yet?"
     },
     "signup": {
       "title": "Sign Up",
@@ -21,12 +20,15 @@
         "currentLength": "Password must be 3 to 20 characters",
         "minimumCharacters": "At least 6 characters",
         "matchPasswords": "Passwords must be the same"
-      }
+      },
+      "question": "Already logged in?"
     },
     "common": {
       "labels": {
         "password": "Password"
       }
     }
-  }
+  },
+  "404": "Page not found",
+  "home": "Home"
 }
