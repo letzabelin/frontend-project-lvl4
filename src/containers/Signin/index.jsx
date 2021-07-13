@@ -1,3 +1,5 @@
+// @ts-check
+
 import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
@@ -11,11 +13,11 @@ import {
   Row,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
+import routes from '../../api/routes.js';
 import { CommonLayout } from '../../components/index.js';
-import useAuth from '../../hooks';
-import routes from '../../routes.js';
+import useAuth from '../../hooks/useAuth.js';
 
 const Signin = () => {
   const [isAuthFailed, setAuthFailed] = useState(false);

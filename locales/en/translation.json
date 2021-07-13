@@ -1,21 +1,21 @@
 {
   "form": {
     "signin": {
-      "title": "Sign In",
+      "title": "Sign in",
       "labels": {
         "username": "Nickname"
       },
-      "submitButton": "Sign In",
+      "submitButton": "Sign in",
       "error": "Incorrect username or password",
       "question": "Not registered yet?"
     },
     "signup": {
-      "title": "Sign Up",
+      "title": "Sign up",
       "labels": {
         "username": "Username",
         "confirmPassword": "Confirm password"
       },
-      "submitButton": "Sign Up",
+      "submitButton": "Sign up",
       "prompts": {
         "currentLength": "Password must be 3 to 20 characters",
         "minimumCharacters": "At least 6 characters",
@@ -29,6 +29,7 @@
       }
     }
   },
+  "signoutButton": "Sign out",
   "404": "Page not found",
   "home": "Home"
 }

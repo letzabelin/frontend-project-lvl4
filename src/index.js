@@ -1,14 +1,20 @@
 // @ts-check
 
+import ReactDOM from 'react-dom';
+
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 
-// import gon from 'gon';
 import '../assets/application.scss';
-import run from './index.jsx';
+import './localize.js';
+
+import init from './app/init.jsx';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-run();
+const app = init();
+
+const container = document.getElementById('chat');
+ReactDOM.render(app, container);

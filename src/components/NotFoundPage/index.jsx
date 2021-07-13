@@ -1,11 +1,12 @@
+// @ts-check
+
 import React from 'react';
 import {
-  Container, Row, Col, Card,
+  Card, Col, Container, Row,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import { CommonLayout } from '../index.js';
+import CommonLayout from '../CommonLayout/index.jsx';
 
 const NotFoundPage = () => {
   const { t } = useTranslation();

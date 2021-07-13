@@ -8,11 +8,11 @@ import {
   Redirect,
 } from 'react-router-dom';
 
-import { Chat, Signin, Signup } from './containers/index.js';
-import { NotFoundPage } from './components/index.js';
+import { Chat, Signin, Signup } from '../containers/index.js';
+import { NotFoundPage } from '../components/index.js';
 
-import authContext from './context/index.js';
-import useAuth from './hooks/index.js';
+import AuthContext from '../contexts/AuthContext.js';
+import useAuth from '../hooks/useAuth.js';
 
 const AuthProvider = ({ children }) => {
   const userId = JSON.parse(localStorage.getItem('userId'));
@@ -28,9 +28,9 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <authContext.Provider value={{ isSignIn, signIn, signOut }}>
+    <AuthContext.Provider value={{ isSignIn, signIn, signOut }}>
       {children}
-    </authContext.Provider>
+    </AuthContext.Provider>
   );
 };
 

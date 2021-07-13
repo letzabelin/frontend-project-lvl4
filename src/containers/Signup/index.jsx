@@ -1,3 +1,5 @@
+// @ts-check
+
 import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
@@ -47,7 +49,7 @@ const Signup = () => {
                     className="d-flex align-items-center justify-content-center"
                   >
                     <img
-                      src="/assets/images/login.gif"
+                      src="/assets/images/signup.gif"
                       alt={t('form.signup.title')}
                     />
                   </Col>
