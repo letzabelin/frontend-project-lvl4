@@ -84,7 +84,7 @@ const Signin = () => {
                         {t('form.signin.title')}
                       </h1>
                       <FloatingLabel
-                        controlId="floatingInput"
+                        controlId="username"
                         label={t('form.signin.labels.username')}
                         className="mb-3"
                       >
@@ -101,7 +101,7 @@ const Signin = () => {
                       </FloatingLabel>
 
                       <FloatingLabel
-                        controlId="floatingPassword"
+                        controlId="password"
                         label={t('form.common.labels.password')}
                       >
                         <Form.Control

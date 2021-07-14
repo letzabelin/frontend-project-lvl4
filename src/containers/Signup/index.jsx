@@ -59,7 +59,7 @@ const Signup = () => {
                         {t('form.signup.title')}
                       </h1>
                       <FloatingLabel
-                        controlId="floatingInput"
+                        controlId="username"
                         label={t('form.signup.labels.username')}
                         className="mb-3"
                       >
@@ -74,7 +74,7 @@ const Signup = () => {
                       </FloatingLabel>
 
                       <FloatingLabel
-                        controlId="floatingPassword"
+                        controlId="password"
                         label={t('form.common.labels.password')}
                         className="mb-3"
                       >
@@ -88,7 +88,7 @@ const Signup = () => {
                       </FloatingLabel>
 
                       <FloatingLabel
-                        controlId="floatingPassword"
+                        controlId="confirmPassword"
                         label={t('form.signup.labels.confirmPassword')}
                       >
                         <Form.Control

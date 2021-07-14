@@ -20,7 +20,7 @@ const options = {
   fallbackLng: 'en',
   resources,
   react: {
-    wait: true,
+    useSuspense: true,
   },
 };
 

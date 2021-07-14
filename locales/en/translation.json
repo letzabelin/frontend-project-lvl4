@@ -29,6 +29,13 @@
       }
     }
   },
+  "messages": {
+    "button": "Submit",
+    "placeholder": "Input text"
+  },
+  "channels": {
+    "title": "Channels"
+  },
   "signoutButton": "Sign out",
   "404": "Page not found",
   "home": "Home"
