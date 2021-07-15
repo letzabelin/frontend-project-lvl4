@@ -9,7 +9,7 @@ const Channels = () => {
   const currentChannelId = useSelector((state) => state.currentChannelId);
 
   return (
-    <Nav variant="pills" className="flex-column" defaultActiveKey="/home">
+    <Nav variant="pills" className="d-flex flex-column" defaultActiveKey="/home">
       {channels.length > 0
         && channels.map(({ id, name, removable }) => (
           <Channel

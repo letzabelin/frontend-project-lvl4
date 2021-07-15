@@ -25,13 +25,7 @@ const SidePanel = () => {
           </svg>
         </Button>
       </div>
-      <Channels
-        channels={[
-          { id: 1, name: 'general', removable: false },
-          { id: 2, name: 'random', removable: true },
-        ]}
-        currentChannelId={1}
-      />
+      <Channels />
     </>
   );
 };

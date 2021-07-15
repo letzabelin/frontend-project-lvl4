@@ -1,16 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import fetchAllData from '../../store/fetchAllData.js';
+
 const slice = createSlice({
   name: 'channels',
   initialState: [],
-  reducers: {
-    initChannels: (_, { payload: { channels } }) => channels,
+  reducers: {},
+  extraReducers: {
+    [fetchAllData.fulfilled]: (_, { payload: { channels } }) => channels,
   },
-  // extraReducers: {
-  //   [fetchData.fulfilled]: (state, { payload: { channels } }) => {
-  //     state.push(...channels);
-  //   },
-  // },
 });
 
 export const { actions } = slice;

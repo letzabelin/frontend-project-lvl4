@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import fetchAllData from '../../store/fetchAllData.js';
+
 const slice = createSlice({
   name: 'currentChannelId',
   initialState: 0,
-  reducers: {
-    initCurrentChannelId: (_, { payload: { currentChannelId } }) => currentChannelId,
+  reducers: {},
+  extraReducers: {
+    [fetchAllData.fulfilled]: (_, { payload: { currentChannelId } }) => currentChannelId,
   },
 });
 

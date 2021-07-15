@@ -6,7 +6,7 @@ const MessageForm = () => {
   const { t } = useTranslation();
 
   return (
-    <InputGroup className="mb-3">
+    <InputGroup className="mb-3 pt-5 mt-auto">
       <FormControl placeholder={t('messages.placeholder')} />
       <Button variant="outline-success">{t('messages.button')}</Button>
     </InputGroup>
