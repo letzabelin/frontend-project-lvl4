@@ -14,7 +14,7 @@ import {
   Button,
 } from 'react-bootstrap';
 
-import { CommonLayout } from '../../components/index.js';
+import CommonLayout from '../common/index.jsx';
 
 const Signup = () => {
   const { t } = useTranslation();

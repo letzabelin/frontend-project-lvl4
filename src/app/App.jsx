@@ -1,6 +1,7 @@
 // @ts-check
 
 import React, { useState } from 'react';
+import { io } from 'socket.io-client';
 import {
   BrowserRouter as Router,
   Route,
@@ -8,11 +9,24 @@ import {
   Redirect,
 } from 'react-router-dom';
 
-import { Chat, Signin, Signup } from '../containers/index.js';
-import { NotFoundPage } from '../components/index.js';
+import Chat from '../features/chat/index.jsx';
+import Signin from '../features/signin/index.jsx';
+import Signup from '../features/signup/index.jsx';
 
-import AuthContext from '../contexts/AuthContext.js';
-import useAuth from '../hooks/useAuth.js';
+import NotFoundPage from '../features/notfoundpage/index.jsx';
+
+import { AuthContext, WebSocketContext } from '../contexts/index.js';
+import { useAuth } from '../hooks/index.js';
+
+const WebSocketProvider = ({ children }) => {
+  const socket = io();
+
+  return (
+    <WebSocketContext.Provider value={{ socket }}>
+      {children}
+    </WebSocketContext.Provider>
+  );
+};
 
 const AuthProvider = ({ children }) => {
   const userId = JSON.parse(localStorage.getItem('userId'));
@@ -55,7 +69,9 @@ const App = () => (
     <Router>
       <Switch>
         <PrivateRoute exact path="/">
-          <Chat />
+          <WebSocketProvider>
+            <Chat />
+          </WebSocketProvider>
         </PrivateRoute>
         <Route path="/signin">
           <Signin />

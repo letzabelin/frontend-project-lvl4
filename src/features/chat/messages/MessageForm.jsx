@@ -1,0 +1,65 @@
+// @ts-check
+
+import React, { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+import {
+  Button, Form, FormControl, InputGroup,
+} from 'react-bootstrap';
+
+import useWebSocket from '../../../hooks/useWebSocket.js';
+import { messagesActions } from './messagesSlice.js';
+
+export default () => {
+  const { socket } = useWebSocket();
+  const { t } = useTranslation();
+  const { addMessage } = messagesActions;
+  const channelId = useSelector((state) => state.currentChannelId);
+  const dispatch = useDispatch();
+  const inputRef = useRef(null);
+  const formik = useFormik({
+    initialValues: {
+      text: '',
+    },
+    onSubmit: ({ text }, { resetForm }) => {
+      const { username } = JSON.parse(localStorage.getItem('userId'));
+
+      socket.emit('newMessage', { text, username, channelId }, (res) => {
+        if (res.status !== 'ok') {
+          throw new Error('Message does not received');
+        }
+      });
+
+      resetForm();
+      inputRef.current.focus();
+    },
+  });
+
+  socket.on('newMessage', (message) => {
+    dispatch(addMessage(message));
+  });
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
+  return (
+    <Form onSubmit={formik.handleSubmit} className="mb-3 pt-5 mt-auto">
+      <InputGroup>
+        <FormControl
+          autoComplete="off"
+          placeholder={t('messages.placeholder')}
+          value={formik.values.text}
+          onChange={formik.handleChange}
+          name="text"
+          ref={inputRef}
+          disabled={formik.isSubmitting}
+        />
+        <Button type="submit" variant="outline-success" disabled={formik.isSubmitting || !formik.dirty}>
+          {t('messages.button')}
+        </Button>
+      </InputGroup>
+    </Form>
+  );
+};

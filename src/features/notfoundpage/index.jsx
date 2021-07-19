@@ -6,7 +6,7 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import CommonLayout from '../CommonLayout/index.jsx';
+import CommonLayout from '../common/index.jsx';
 
 const NotFoundPage = () => {
   const { t } = useTranslation();

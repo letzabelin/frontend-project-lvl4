@@ -34,7 +34,15 @@
     "placeholder": "Input text"
   },
   "channels": {
-    "title": "Channels"
+    "title": "Channels",
+    "channel": "channel",
+    "actions": {
+      "rename": "Rename",
+      "delete": "Delete",
+      "add": "Add",
+      "cancel": "Cancel"
+    },
+    "question": "Are you sure?"
   },
   "signoutButton": "Sign out",
   "404": "Page not found",

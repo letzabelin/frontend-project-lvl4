@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-import Channels from './Channels.jsx';
+import AddChannelModal from '../../modals/AddChannelModal.jsx';
 
-const SidePanel = () => {
+const ChannelHeader = () => {
+  const [show, setShow] = useState(false);
   const { t } = useTranslation();
+
+  const onShow = () => {
+    setShow(true);
+  };
+
+  const onHide = () => {
+    setShow(false);
+  };
 
   return (
     <>
       <div className="d-flex justify-content-between align-items-center w-100 mb-2 ps-4 pe-2">
         <span>{t('channels.title')}</span>
-        <Button variant="light" className="btn-group-vertical p-0 text-primary">
+        <Button
+          onClick={onShow}
+          variant="light"
+          className="btn-group-vertical p-0 text-primary"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -25,9 +38,9 @@ const SidePanel = () => {
           </svg>
         </Button>
       </div>
-      <Channels />
+      <AddChannelModal show={show} onHide={onHide} />
     </>
   );
 };
 
-export default SidePanel;
+export default ChannelHeader;
