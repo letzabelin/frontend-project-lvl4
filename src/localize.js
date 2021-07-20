@@ -8,15 +8,15 @@ import translationRu from '../locales/ru/translation.json';
 
 const resources = {
   ru: {
-    translation: translationEn,
+    translation: translationRu,
   },
   en: {
-    translation: translationRu,
+    translation: translationEn,
   },
 };
 
 const options = {
-  fallbackLng: 'ru',
+  lng: 'ru',
   resources,
   react: {
     useSuspense: true,

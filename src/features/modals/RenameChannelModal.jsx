@@ -80,7 +80,8 @@ const RenameChannelModal = ({
             {t('channels.actions.cancel')}
           </Button>
           <Button type="submit" variant="success">
-            {t('channels.actions.rename')}
+            {/* {t('channels.actions.rename')} */}
+            {t('channels.actions.send')}
           </Button>
         </ChannelForm>
       </Modal.Body>

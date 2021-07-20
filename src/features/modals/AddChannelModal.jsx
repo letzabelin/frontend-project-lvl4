@@ -81,7 +81,8 @@ const AddChannelModal = ({ show, onHide }) => {
             {t('channels.actions.cancel')}
           </Button>
           <Button type="submit" variant="success">
-            {t('channels.actions.add')}
+            {/* {t('channels.actions.add')} */}
+            {t('channels.actions.send')}
           </Button>
         </ChannelForm>
       </Modal.Body>
