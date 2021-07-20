@@ -4,7 +4,7 @@ import axios from 'axios';
 import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
   Form,
   FloatingLabel,
@@ -178,11 +178,6 @@ const Signup = () => {
                   </Col>
                 </Row>
               </Card.Body>
-              <Card.Footer className="text-center">
-                {t('form.signup.question')}
-                {' '}
-                <Link to="/signin">{t('form.signin.title')}</Link>
-              </Card.Footer>
             </Card>
           </Col>
         </Row>
