@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 
 import Chat from '../features/chat/index.jsx';
-import Signin from '../features/signin/index.jsx';
+import Login from '../features/login/index.jsx';
 import Signup from '../features/signup/index.jsx';
 
 import NotFoundPage from '../features/notfoundpage/index.jsx';
@@ -30,35 +30,35 @@ const WebSocketProvider = ({ children }) => {
 
 const AuthProvider = ({ children }) => {
   const userId = JSON.parse(localStorage.getItem('userId'));
-  const [isSignIn, setSignIn] = useState(!!userId);
+  const [isLogIn, setLogIn] = useState(!!userId);
 
-  const signIn = () => {
-    setSignIn(true);
+  const logIn = () => {
+    setLogIn(true);
   };
 
   const signOut = () => {
     window.localStorage.removeItem('userId');
-    setSignIn(false);
+    setLogIn(false);
   };
 
   return (
-    <AuthContext.Provider value={{ isSignIn, signIn, signOut }}>
+    <AuthContext.Provider value={{ isLogIn, logIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 const PrivateRoute = ({ children, path, exact }) => {
-  const { isSignIn } = useAuth();
+  const { isLogIn } = useAuth();
 
   return (
     <Route
       exact={exact}
       path={path}
-      render={({ location }) => (isSignIn ? (
+      render={({ location }) => (isLogIn ? (
         children
       ) : (
-        <Redirect to={{ pathname: '/signin', state: { from: location } }} />
+        <Redirect to={{ pathname: '/login', state: { from: location } }} />
       ))}
     />
   );
@@ -73,8 +73,8 @@ const App = () => (
             <Chat />
           </WebSocketProvider>
         </PrivateRoute>
-        <Route path="/signin">
-          <Signin />
+        <Route path="/login">
+          <Login />
         </Route>
         <Route path="/signup">
           <Signup />

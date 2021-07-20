@@ -25,7 +25,7 @@ const Signup = () => {
   const usernameRef = useRef(null);
 
   const [isSignupFailed, setSignupFailed] = useState(false);
-  const { signIn } = useAuth();
+  const { logIn } = useAuth();
   const history = useHistory();
 
   const formik = useFormik({
@@ -56,7 +56,7 @@ const Signup = () => {
         const { data } = await axios.post(routes.signupPath(), values);
 
         localStorage.setItem('userId', JSON.stringify(data));
-        signIn();
+        logIn();
 
         history.push('/');
       } catch (err) {

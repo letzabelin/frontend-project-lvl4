@@ -19,10 +19,10 @@ import routes from '../../api/routes.js';
 import CommonLayout from '../common/index.jsx';
 import useAuth from '../../hooks/useAuth.js';
 
-const Signin = () => {
+const Login = () => {
   const [isAuthFailed, setAuthFailed] = useState(false);
   const { t } = useTranslation();
-  const { signIn } = useAuth();
+  const { logIn } = useAuth();
   const usernameRef = useRef(null);
   const location = useLocation();
   const history = useHistory();
@@ -36,9 +36,9 @@ const Signin = () => {
       setAuthFailed(false);
 
       try {
-        const { data } = await axios.post(routes.signinPath(), values);
+        const { data } = await axios.post(routes.loginPath(), values);
         localStorage.setItem('userId', JSON.stringify(data));
-        signIn();
+        logIn();
 
         const { from } = location.state || { from: { pathname: '/' } };
         history.replace(from);
@@ -73,19 +73,19 @@ const Signin = () => {
                   >
                     <img
                       width="300"
-                      src="/assets/images/signin.jpg"
-                      alt={t('form.signin.title')}
+                      src="/assets/images/login.jpg"
+                      alt={t('form.login.title')}
                       className="rounded-circle"
                     />
                   </Col>
                   <Col xs={12} lg={6}>
                     <Form onSubmit={formik.handleSubmit} className="p-5">
                       <h1 className="text-center mb-4">
-                        {t('form.signin.title')}
+                        {t('form.login.title')}
                       </h1>
                       <FloatingLabel
                         controlId="username"
-                        label={t('form.signin.labels.username')}
+                        label={t('form.login.labels.username')}
                         className="mb-3"
                       >
                         <Form.Control
@@ -113,7 +113,7 @@ const Signin = () => {
                           name="password"
                           required
                         />
-                        <Form.Control.Feedback type="invalid">{t('form.signin.error')}</Form.Control.Feedback>
+                        <Form.Control.Feedback type="invalid">{t('form.login.error')}</Form.Control.Feedback>
                       </FloatingLabel>
 
                       <Button
@@ -121,14 +121,14 @@ const Signin = () => {
                         className="w-100 mt-3"
                         variant="outline-primary"
                       >
-                        {t('form.signin.submitButton')}
+                        {t('form.login.submitButton')}
                       </Button>
                     </Form>
                   </Col>
                 </Row>
               </Card.Body>
               <Card.Footer className="text-center">
-                {t('form.signin.question')}
+                {t('form.login.question')}
                 {' '}
                 <Link to="/signup">{t('form.signup.title')}</Link>
               </Card.Footer>
@@ -140,4 +140,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export Login Login;

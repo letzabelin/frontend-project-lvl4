@@ -1,11 +1,11 @@
 {
   "form": {
-    "signin": {
-      "title": "Sign in",
+    "login": {
+      "title": "Log in",
       "labels": {
         "username": "Nickname"
       },
-      "submitButton": "Sign in",
+      "submitButton": "Log in",
       "error": "Incorrect username or password",
       "question": "Not registered yet?"
     },

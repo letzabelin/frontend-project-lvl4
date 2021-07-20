@@ -1,6 +1,6 @@
 {
   "form": {
-    "signin": {
+    "login": {
       "title": "Войти",
       "labels": {
         "username": "Ваш ник"
