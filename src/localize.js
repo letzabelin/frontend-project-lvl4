@@ -16,7 +16,7 @@ const resources = {
 };
 
 const options = {
-  fallbackLng: 'en',
+  fallbackLng: 'ru',
   resources,
   react: {
     useSuspense: true,

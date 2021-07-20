@@ -20,7 +20,7 @@ const CommonLayout = ({ children }) => {
       <Navbar className="shadow-sm">
         <Container>
           <Navbar.Brand as={Link} to="/">
-            CHAT
+            Hexlet-Chat
             {' '}
             <img
               src="/assets/images/logo.png"

@@ -49,6 +49,7 @@ export default () => {
       <InputGroup>
         <FormControl
           autoComplete="off"
+          data-testid="new-message"
           placeholder={t('messages.placeholder')}
           value={formik.values.text}
           onChange={formik.handleChange}

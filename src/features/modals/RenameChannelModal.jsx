@@ -43,6 +43,7 @@ const ChannelForm = ({
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Form.Control
+        data-testid="rename-channel"
         isInvalid={isAuthFailed}
         ref={nameRef}
         name="name"

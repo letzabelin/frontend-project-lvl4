@@ -46,6 +46,7 @@ const ChannelForm = ({ children, onHide }) => {
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Form.Control
+        data-testid="add-channel"
         isInvalid={isAuthFailed}
         ref={nameRef}
         name="name"

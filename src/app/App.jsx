@@ -8,6 +8,7 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
+import { RollbarContext } from '@rollbar/react';
 
 import Chat from '../features/chat/index.jsx';
 import Signin from '../features/signin/index.jsx';
@@ -69,15 +70,21 @@ const App = () => (
     <Router>
       <Switch>
         <PrivateRoute exact path="/">
-          <WebSocketProvider>
-            <Chat />
-          </WebSocketProvider>
+          <RollbarContext context="/chat">
+            <WebSocketProvider>
+              <Chat />
+            </WebSocketProvider>
+          </RollbarContext>
         </PrivateRoute>
         <Route path="/signin">
-          <Signin />
+          <RollbarContext context="/signin">
+            <Signin />
+          </RollbarContext>
         </Route>
         <Route path="/signup">
-          <Signup />
+          <RollbarContext context="/signup">
+            <Signup />
+          </RollbarContext>
         </Route>
         <Route path="*">
           <NotFoundPage />
