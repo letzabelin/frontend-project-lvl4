@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth.js';
 
 const CommonLayout = ({ children }) => {
-  const { isSignIn, signOut } = useAuth();
+  const { isLogIn, signOut } = useAuth();
   const { t } = useTranslation();
 
   const handleClick = () => {
@@ -30,7 +30,7 @@ const CommonLayout = ({ children }) => {
               className="d-inline-block align-top"
             />
           </Navbar.Brand>
-          {isSignIn && (
+          {isLogIn && (
             <Button onClick={handleClick} variant="outline-primary">
               {t('signoutButton')}
             </Button>
