@@ -16,5 +16,5 @@ if (process.env.NODE_ENV !== 'production') {
 
 const app = init();
 
-const container = document.getElementsByClassName('chat');
-ReactDOM.render(app, container);
+// const container = document.getElementsByClassName('chat');
+ReactDOM.render(app, document.getElementById('chat'));
