@@ -8,7 +8,6 @@ import ChannelHeader from './ChannelHeader.jsx';
 import { channelsActions, channelsSelectors } from './channelsSlice.js';
 import { currentChannelIdActions } from './currentChannelIdSlice.js';
 
-
 const Channels = () => {
   const dispatch = useDispatch();
   const { socket } = useWebSocket();

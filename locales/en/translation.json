@@ -21,11 +21,15 @@
         "minimumCharacters": "At least 6 characters",
         "matchPasswords": "Passwords must be the same"
       },
-      "question": "Already logged in?"
+      "question": "Already logged in?",
+      "error": "User already exist"
     },
     "common": {
       "labels": {
         "password": "Password"
+      },
+      "prompts": {
+        "required": "Обязательное поле"
       }
     }
   },

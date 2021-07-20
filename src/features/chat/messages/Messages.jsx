@@ -4,7 +4,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import Message from './Message.jsx';
-import MessageForm from './MessageForm';
+import MessageForm from './MessageForm.jsx';
 import { messagesSelectors } from './messagesSlice.js';
 
 const Messages = () => {
@@ -14,7 +14,7 @@ const Messages = () => {
 
   return (
     <>
-      <div className="overflow-auto">
+      <div className="overflow-auto pt-4">
         {currentMessages.map(({ id, text, username }) => (
           <Message key={id} text={text} username={username} />
         ))}

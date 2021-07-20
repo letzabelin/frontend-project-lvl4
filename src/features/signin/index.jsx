@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import routes from '../../api/routes.js';
-import CommonLayout from '../../features/common/index.jsx';
+import CommonLayout from '../common/index.jsx';
 import useAuth from '../../hooks/useAuth.js';
 
 const Signin = () => {
