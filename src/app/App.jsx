@@ -1,7 +1,6 @@
 // @ts-check
 
 import React, { useState } from 'react';
-import { io } from 'socket.io-client';
 import {
   BrowserRouter as Router,
   Route,
@@ -15,18 +14,18 @@ import Signup from '../features/signup/index.jsx';
 
 import NotFoundPage from '../features/notfoundpage/index.jsx';
 
-import { AuthContext, WebSocketContext } from '../contexts/index.js';
+import { AuthContext } from '../contexts/index.js';
 import { useAuth } from '../hooks/index.js';
 
-const WebSocketProvider = ({ children }) => {
-  const socket = io();
+// const WebSocketProvider = ({ children }) => {
+//   const socket = io();
 
-  return (
-    <WebSocketContext.Provider value={{ socket }}>
-      {children}
-    </WebSocketContext.Provider>
-  );
-};
+//   return (
+//     <WebSocketContext.Provider value={{ socket }}>
+//       {children}
+//     </WebSocketContext.Provider>
+//   );
+// };
 
 const AuthProvider = ({ children }) => {
   const userId = JSON.parse(localStorage.getItem('userId'));
@@ -69,9 +68,9 @@ const App = () => (
     <Router>
       <Switch>
         <PrivateRoute exact path="/">
-          <WebSocketProvider>
-            <Chat />
-          </WebSocketProvider>
+          {/* <WebSocketProvider> */}
+          <Chat />
+          {/* </WebSocketProvider> */}
         </PrivateRoute>
         <Route path="/login">
           <Login />
