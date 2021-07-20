@@ -39,7 +39,6 @@
     "formik": "^2.2.5",
     "http-errors": "^1.8.0",
     "i18next": "^20.2.1",
-    "i18next-browser-languagedetector": "^6.1.0",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "pino-pretty": "^4.8.0",
