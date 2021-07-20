@@ -17,6 +17,7 @@ const resources = {
 
 const options = {
   lng: 'ru',
+  debug: true,
   resources,
   react: {
     useSuspense: true,

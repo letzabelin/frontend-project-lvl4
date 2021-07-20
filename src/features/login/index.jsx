@@ -73,7 +73,7 @@ const Login = () => {
                   >
                     <img
                       width="300"
-                      src="/assets/images/login.jpg"
+                      src="/assets/images/login.png"
                       alt={t('form.login.title')}
                       className="rounded-circle"
                     />
