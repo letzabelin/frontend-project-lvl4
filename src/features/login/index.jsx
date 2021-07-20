@@ -113,7 +113,7 @@ const Login = () => {
                           name="password"
                           required
                         />
-                        <Form.Control.Feedback type="invalid">{t('form.login.error')}</Form.Control.Feedback>
+                        { isAuthFailed && <Form.Control.Feedback type="invalid">{t('form.login.error')}</Form.Control.Feedback>}
                       </FloatingLabel>
 
                       <Button
