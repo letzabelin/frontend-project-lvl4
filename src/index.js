@@ -15,7 +15,8 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-const app = init(io());
-
 const container = document.getElementById('chat');
+const socket = io();
+const app = init(socket);
+
 ReactDOM.render(app, container);
