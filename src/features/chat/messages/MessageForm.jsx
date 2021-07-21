@@ -42,7 +42,6 @@ export default () => {
 
   useEffect(() => {
     inputRef.current.focus();
-    throw new Error();
   }, []);
 
   return (
