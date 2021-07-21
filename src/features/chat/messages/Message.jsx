@@ -6,7 +6,7 @@ const Message = ({ text, username }) => (
       {username}
       :
     </span>
-    <span>{text}</span>
+    {text}
   </p>
 );
 
