@@ -29,7 +29,7 @@
         "password": "Password"
       },
       "prompts": {
-        "required": "Обязательное поле"
+        "required": "Required"
       }
     }
   },

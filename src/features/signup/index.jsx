@@ -43,10 +43,7 @@ const Signup = () => {
         .min(6, t('form.signup.prompts.minimumCharacters'))
         .required(t('form.common.prompts.required')),
       confirmPassword: Yup.string()
-        .oneOf(
-          [Yup.ref('password')],
-          t('form.signup.prompts.matchPasswords'),
-        )
+        .oneOf([Yup.ref('password')], t('form.signup.prompts.matchPasswords'))
         .required(t('form.common.prompts.required')),
     }),
     onSubmit: async (values) => {
@@ -60,7 +57,10 @@ const Signup = () => {
 
         history.push('/');
       } catch (err) {
-        if (err.isAxiosError && (err.response.status === 401 || err.response.status === 409)) {
+        if (
+          err.isAxiosError
+          && (err.response.status === 401 || err.response.status === 409)
+        ) {
           setSignupFailed(true);
           usernameRef.current.select();
           return;
@@ -112,13 +112,19 @@ const Signup = () => {
                           placeholder="username"
                           name="username"
                           isInvalid={
-                            formik.errors.username && formik.touched.username
+                            (formik.errors.username
+                              && formik.touched.username)
+                            || isSignupFailed
                           }
                           autoComplete="off"
                         />
-                        <Form.Control.Feedback type="invalid" tooltip>
-                          {formik.errors.username}
-                        </Form.Control.Feedback>
+                        {
+                          formik.errors.username && (
+                            <Form.Control.Feedback type="invalid" tooltip>
+                              {formik.errors.username}
+                            </Form.Control.Feedback>
+                          )
+                        }
                       </FloatingLabel>
 
                       <FloatingLabel
@@ -134,12 +140,18 @@ const Signup = () => {
                           placeholder="Password"
                           name="password"
                           isInvalid={
-                            formik.errors.password && formik.touched.password
+                            (formik.errors.password
+                              && formik.touched.password)
+                            || isSignupFailed
                           }
                         />
-                        <Form.Control.Feedback type="invalid" tooltip>
-                          {formik.errors.password}
-                        </Form.Control.Feedback>
+                        {
+                          formik.errors.password && (
+                            <Form.Control.Feedback type="invalid" tooltip>
+                              {formik.errors.password}
+                            </Form.Control.Feedback>
+                          )
+                        }
                       </FloatingLabel>
 
                       <FloatingLabel
@@ -155,16 +167,22 @@ const Signup = () => {
                           name="confirmPassword"
                           isInvalid={
                             (formik.errors.confirmPassword
-                            && formik.touched.confirmPassword)
+                              && formik.touched.confirmPassword)
                             || isSignupFailed
                           }
                         />
-                        <Form.Control.Feedback type="invalid" tooltip>
-                          {formik.errors.confirmPassword}
-                        </Form.Control.Feedback>
-                        <Form.Control.Feedback type="invalid" tooltip>
-                          {t('form.signup.error')}
-                        </Form.Control.Feedback>
+                        {
+                          formik.errors.confirmPassword && (
+                            <Form.Control.Feedback type="invalid" tooltip>
+                              {formik.errors.confirmPassword}
+                            </Form.Control.Feedback>
+                          )
+                        }
+                        {isSignupFailed && (
+                          <Form.Control.Feedback type="invalid" tooltip>
+                            {t('form.signup.error')}
+                          </Form.Control.Feedback>
+                        )}
                       </FloatingLabel>
 
                       <Button
