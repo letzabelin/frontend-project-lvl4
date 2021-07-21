@@ -7,6 +7,7 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
+import { RollbarContext } from '@rollbar/react';
 
 import Chat from '../features/chat/index.jsx';
 import Login from '../features/login/index.jsx';
@@ -16,16 +17,6 @@ import NotFoundPage from '../features/notfoundpage/index.jsx';
 
 import { AuthContext } from '../contexts/index.js';
 import { useAuth } from '../hooks/index.js';
-
-// const WebSocketProvider = ({ children }) => {
-//   const socket = io();
-
-//   return (
-//     <WebSocketContext.Provider value={{ socket }}>
-//       {children}
-//     </WebSocketContext.Provider>
-//   );
-// };
 
 const AuthProvider = ({ children }) => {
   const userId = JSON.parse(localStorage.getItem('userId'));
@@ -68,15 +59,19 @@ const App = () => (
     <Router>
       <Switch>
         <PrivateRoute exact path="/">
-          {/* <WebSocketProvider> */}
-          <Chat />
-          {/* </WebSocketProvider> */}
+          <RollbarContext context="/">
+            <Chat />
+          </RollbarContext>
         </PrivateRoute>
         <Route path="/login">
-          <Login />
+          <RollbarContext context="/login">
+            <Login />
+          </RollbarContext>
         </Route>
         <Route path="/signup">
-          <Signup />
+          <RollbarContext context="/signup">
+            <Signup />
+          </RollbarContext>
         </Route>
         <Route path="*">
           <NotFoundPage />

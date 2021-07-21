@@ -12,8 +12,6 @@ import { WebSocketContext } from '../contexts/index.js';
 import rollbarConfig from '../rollbar.js';
 
 export default (socket) => {
-  console.log(rollbarConfig);
-
   const vdom = (
     <RollbarProvider config={rollbarConfig}>
       <I18nextProvider i18n={i18n}>
