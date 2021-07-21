@@ -28,7 +28,9 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [{ from: 'assets/static' }],
     }),
-    new Dotenv(),
+    new Dotenv({
+      systemvars: true,
+    }),
   ],
   module: {
     rules: [
