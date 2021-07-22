@@ -1,3 +1,5 @@
+// @ts-check
+
 import React from 'react';
 
 const Message = ({ text, username }) => (

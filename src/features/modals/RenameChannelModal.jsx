@@ -1,3 +1,5 @@
+// @ts-check
+
 import { useFormik } from 'formik';
 import React, { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';

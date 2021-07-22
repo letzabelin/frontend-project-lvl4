@@ -1,3 +1,5 @@
+// @ts-check
+
 import { createSlice, current } from '@reduxjs/toolkit';
 
 import fetchAllData from '../../../store/fetchAllData.js';

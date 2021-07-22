@@ -1,4 +1,6 @@
-import React from 'react';
+// @ts-check
+
+import React, { useEffect } from 'react';
 import { Nav } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,6 +19,18 @@ const Channels = () => {
   const channels = useSelector(channelsSelectors.selectAll);
   const currentChannelId = useSelector((state) => state.currentChannelId);
 
+  useEffect(() => {
+    socket.on('removeChannel', (res) => {
+      dispatch(deleteChannel({ id: res.id }));
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    socket.on('renameChannel', (res) => {
+      dispatch(renameChannel(res));
+    });
+  }, [socket]);
+
   const handleClick = (id) => () => {
     dispatch(setCurrentChannel({ id }));
   };
@@ -25,17 +39,9 @@ const Channels = () => {
     socket.emit('removeChannel', { id });
   };
 
-  socket.on('removeChannel', (res) => {
-    dispatch(deleteChannel({ id: res.id }));
-  });
-
   const onRename = (id) => (name) => {
     socket.emit('renameChannel', { id, name });
   };
-
-  socket.on('renameChannel', (res) => {
-    dispatch(renameChannel(res));
-  });
 
   return (
     <>

@@ -1,7 +1,7 @@
 // @ts-check
 
 import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import {
@@ -9,14 +9,11 @@ import {
 } from 'react-bootstrap';
 
 import useWebSocket from '../../../hooks/useWebSocket.js';
-import { messagesActions } from './messagesSlice.js';
 
 export default () => {
   const { socket } = useWebSocket();
   const { t } = useTranslation();
-  const { addMessage } = messagesActions;
   const channelId = useSelector((state) => state.currentChannelId);
-  const dispatch = useDispatch();
   const inputRef = useRef(null);
   const formik = useFormik({
     initialValues: {
@@ -34,10 +31,6 @@ export default () => {
       resetForm();
       inputRef.current.focus();
     },
-  });
-
-  socket.on('newMessage', (message) => {
-    dispatch(addMessage(message));
   });
 
   useEffect(() => {

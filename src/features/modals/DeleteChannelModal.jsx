@@ -1,3 +1,5 @@
+// @ts-check
+
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
