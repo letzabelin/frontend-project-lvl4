@@ -44,9 +44,10 @@ export default () => {
           onChange={formik.handleChange}
           name="text"
           ref={inputRef}
-          disabled={formik.isSubmitting}
+          // disabled={formik.isSubmitting}
         />
-        <Button type="submit" variant="outline-success" disabled={formik.isSubmitting || !formik.dirty}>
+        {/* <Button type="submit" variant="outline-success" disabled={formik.isSubmitting || !formik.dirty}> */}
+        <Button type="submit" variant="outline-success">
           {t('messages.button')}
         </Button>
       </InputGroup>

@@ -2,19 +2,17 @@
 
 import { useFormik } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 import useWebSocket from '../../hooks/useWebSocket.js';
-import { channelsActions, channelsSelectors } from '../chat/channels/channelsSlice.js';
+import { channelsSelectors } from '../chat/channels/channelsSlice.js';
 
 const ChannelForm = ({ children, onHide }) => {
   const channels = useSelector(channelsSelectors.selectAll);
   const [isAuthFailed, setAuthFailed] = useState(false);
-  const { addChannel } = channelsActions;
   const { socket } = useWebSocket();
-  const dispatch = useDispatch();
   const nameRef = useRef(null);
   const formik = useFormik({
     initialValues: {
@@ -35,10 +33,6 @@ const ChannelForm = ({ children, onHide }) => {
       socket.emit('newChannel', { name });
       onHide();
     },
-  });
-
-  socket.on('newChannel', (res) => {
-    dispatch(addChannel(res));
   });
 
   useEffect(() => {

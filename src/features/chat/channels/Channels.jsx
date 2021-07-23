@@ -13,7 +13,7 @@ import { currentChannelIdActions } from './currentChannelIdSlice.js';
 const Channels = () => {
   const dispatch = useDispatch();
   const { socket } = useWebSocket();
-  const { deleteChannel, renameChannel } = channelsActions;
+  const { addChannel, deleteChannel, renameChannel } = channelsActions;
   const { setCurrentChannel } = currentChannelIdActions;
 
   const channels = useSelector(channelsSelectors.selectAll);
@@ -28,6 +28,12 @@ const Channels = () => {
   useEffect(() => {
     socket.on('renameChannel', (res) => {
       dispatch(renameChannel(res));
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    socket.on('newChannel', (res) => {
+      dispatch(addChannel(res));
     });
   }, [socket]);
 
