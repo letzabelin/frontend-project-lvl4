@@ -50,7 +50,7 @@ export default () => {
           ref={inputRef}
           disabled={formik.isSubmitting}
         />
-        <Button type="submit" variant="outline-success" disabled={formik.isSubmitting || !formik.dirty}>
+        <Button role="button" type="submit" variant="outline-success" disabled={formik.isSubmitting || !formik.dirty}>
           {t('messages.button')}
         </Button>
       </InputGroup>
