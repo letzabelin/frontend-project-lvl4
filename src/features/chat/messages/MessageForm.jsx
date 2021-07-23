@@ -22,11 +22,7 @@ export default () => {
     onSubmit: ({ text }, { resetForm }) => {
       const { username } = JSON.parse(localStorage.getItem('userId'));
 
-      socket.emit('newMessage', { text, username, channelId }, (res) => {
-        if (res.status !== 'ok') {
-          throw new Error('Message does not received');
-        }
-      });
+      socket.emit('newMessage', { text, username, channelId });
 
       resetForm();
       inputRef.current.focus();
@@ -48,10 +44,9 @@ export default () => {
           onChange={formik.handleChange}
           name="text"
           ref={inputRef}
-          // disabled={formik.isSubmitting}
+          disabled={formik.isSubmitting}
         />
-        {/* <Button type="submit" variant="outline-success" disabled={formik.isSubmitting || !formik.dirty}> */}
-        <Button type="submit" variant="outline-success">
+        <Button type="submit" variant="outline-success" disabled={formik.isSubmitting || !formik.dirty}>
           {t('messages.button')}
         </Button>
       </InputGroup>
