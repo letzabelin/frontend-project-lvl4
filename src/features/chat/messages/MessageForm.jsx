@@ -22,16 +22,17 @@ export default () => {
     onSubmit: ({ text }, { resetForm }) => {
       const { username } = JSON.parse(localStorage.getItem('userId'));
 
-      socket.emit('newMessage', { text, username, channelId });
-
-      resetForm();
-      inputRef.current.focus();
+      socket.emit('newMessage', { text, username, channelId }, ({ status }) => {
+        if (status === 'ok') {
+          resetForm();
+        }
+      });
     },
   });
 
   useEffect(() => {
     inputRef.current.focus();
-  }, []);
+  }, [formik]);
 
   return (
     <Form onSubmit={formik.handleSubmit} className="mb-3 pt-5 mt-auto">
@@ -47,11 +48,9 @@ export default () => {
           // disabled={formik.isSubmitting}
         />
         {/* <Button type="submit" variant="outline-success" disabled={formik.isSubmitting || !formik.dirty}> */}
-        <div className="input-group-append">
-          <Button type="submit" variant="outline-success">
-            {t('messages.button')}
-          </Button>
-        </div>
+        <Button type="submit" variant="outline-success">
+          {t('messages.button')}
+        </Button>
       </InputGroup>
     </Form>
   );
