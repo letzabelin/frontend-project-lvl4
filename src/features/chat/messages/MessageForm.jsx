@@ -22,11 +22,8 @@ export default () => {
     onSubmit: ({ text }, { resetForm }) => {
       const { username } = JSON.parse(localStorage.getItem('userId'));
 
-      socket.emit('newMessage', { text, username, channelId }, ({ status }) => {
-        if (status === 'ok') {
-          resetForm();
-        }
-      });
+      socket.emit('newMessage', { text, username, channelId });
+      resetForm();
     },
   });
 

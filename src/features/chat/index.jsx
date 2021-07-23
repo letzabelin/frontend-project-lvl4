@@ -9,11 +9,6 @@ import Messages from './messages/Messages.jsx';
 import Channels from './channels/Channels.jsx';
 import fetchAllData from '../../store/fetchAllData.js';
 
-import { messagesActions } from './messages/messagesSlice.js';
-import { channelsActions } from './channels/channelsSlice.js';
-
-import { useWebSocket } from '../../hooks/index.js';
-
 const getAuthHeaders = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));
   return userId?.token ? { Authorization: `Bearer ${userId.token}` } : {};
@@ -21,15 +16,6 @@ const getAuthHeaders = () => {
 
 const Chat = () => {
   const dispatch = useDispatch();
-  const { socket } = useWebSocket();
-  const { addChannel, removeChannel, renameChannel } = channelsActions;
-  const { addMessage } = messagesActions;
-
-  useEffect(() => {
-    socket.on('newMessage', (message) => {
-      dispatch(addMessage(message));
-    });
-  }, [socket]);
 
   useEffect(() => {
     const getData = async () => {

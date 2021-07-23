@@ -16,11 +16,11 @@ const Messages = () => {
   const currentChannelId = useSelector((state) => state.currentChannelId);
   const currentMessages = messages.filter(({ channelId }) => channelId === currentChannelId);
 
-  // useEffect(() => {
-  //   socket.on('newMessage', (message) => {
-  //     dispatch(addMessage(message));
-  //   });
-  // }, [socket]);
+  useEffect(() => {
+    socket.on('newMessage', (message) => {
+      dispatch(addMessage(message));
+    });
+  }, [socket]);
 
   return (
     <>
