@@ -11,7 +11,7 @@ import { useWebSocket } from '../../../hooks/index.js';
 const Messages = () => {
   const { socket } = useWebSocket();
   const { addMessage } = messagesActions;
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const messages = useSelector(messagesSelectors.selectAll);
   const currentChannelId = useSelector((state) => state.currentChannelId);
   const currentMessages = messages.filter(({ channelId }) => channelId === currentChannelId);
