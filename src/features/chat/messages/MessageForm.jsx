@@ -23,7 +23,7 @@ export default () => {
       const { username } = JSON.parse(localStorage.getItem('userId'));
 
       socket.emit('newMessage', { text, username, channelId });
-      resetForm();
+      // resetForm();
     },
   });
 
