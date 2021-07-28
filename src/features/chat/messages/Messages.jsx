@@ -18,11 +18,11 @@ const Messages = () => {
     ({ channelId }) => channelId === currentChannelId,
   );
 
-  useEffect(() => {
-    socket.on('newMessage', (message) => {
-      dispatch(addMessage(message));
-    });
-  }, [socket]);
+  // useEffect(() => {
+  //   socket.on('newMessage', (message) => {
+  //     dispatch(addMessage(message));
+  //   });
+  // }, [socket]);
 
   return (
     <>

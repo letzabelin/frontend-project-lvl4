@@ -1,18 +1,21 @@
 // @ts-check
 
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import {
   Button, Form, FormControl, InputGroup,
 } from 'react-bootstrap';
 
-import useWebSocket from '../../../hooks/useWebSocket.js';
+import { useWebSocket } from '../../../hooks/index.js';
+import { messagesActions } from './messagesSlice.js';
 
 export default () => {
   const { socket } = useWebSocket();
   const { t } = useTranslation();
+  const { addMessage } = messagesActions;
+  const dispatch = useDispatch();
   const channelId = useSelector((state) => state.currentChannelId);
   const inputRef = useRef(null);
   const formik = useFormik({
@@ -23,9 +26,13 @@ export default () => {
       const { username } = JSON.parse(localStorage.getItem('userId'));
 
       socket.emit('newMessage', { text, username, channelId }, ({ status }) => {
-        console.log(status);
+        if (status === 'ok') {
+          await socket.on('newMessage', (message) => {
+            dispatch(addMessage(message));
+          });
+          resetForm();
+        }
       });
-      resetForm();
     },
   });
 
