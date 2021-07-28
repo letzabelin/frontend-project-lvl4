@@ -22,10 +22,10 @@ export default () => {
     initialValues: {
       text: '',
     },
-    onSubmit: async ({ text }, { resetForm }) => {
+    onSubmit: ({ text }, { resetForm }) => {
       const { username } = JSON.parse(localStorage.getItem('userId'));
 
-      socket.emit('newMessage', { text, username, channelId }, ({ status }) => {
+      socket.emit('newMessage', { text, username, channelId }, async ({ status }) => {
         if (status === 'ok') {
           await socket.on('newMessage', (message) => {
             dispatch(addMessage(message));
