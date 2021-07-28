@@ -1,18 +1,21 @@
 // @ts-check
 
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import {
   Button, Form, FormControl, InputGroup,
 } from 'react-bootstrap';
 
-import useWebSocket from '../../../hooks/useWebSocket.js';
+import { useWebSocket } from '../../../hooks/index.js';
+import { messagesActions } from './messagesSlice.js';
 
 export default () => {
   const { socket } = useWebSocket();
+  const { addMessage } = messagesActions;
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const channelId = useSelector((state) => state.currentChannelId);
   const inputRef = useRef(null);
   const formik = useFormik({
@@ -22,8 +25,15 @@ export default () => {
     onSubmit: ({ text }, { resetForm }) => {
       const { username } = JSON.parse(localStorage.getItem('userId'));
 
-      socket.emit('newMessage', { text, username, channelId });
-      resetForm();
+      socket.emit('newMessage', { text, username, channelId }, ({ status }) => {
+        if (status === 'ok') {
+          socket.on('newMessage', (message) => {
+            dispatch(addMessage(message));
+          });
+
+          resetForm();
+        }
+      });
     },
   });
 
@@ -45,8 +55,8 @@ export default () => {
           // disabled={formik.isSubmitting}
         />
         {/* <Button type="submit" variant="outline-success" disabled={formik.isSubmitting || !formik.dirty}> */}
-        <Button name="Отправить" type="submit" variant="outline-success">
-          Отправить
+        <Button type="submit" variant="outline-success">
+          {t('messages.button')}
         </Button>
       </InputGroup>
     </Form>
