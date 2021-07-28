@@ -16,8 +16,10 @@ export default () => {
   const { t } = useTranslation();
   const { addMessage } = messagesActions;
   const dispatch = useDispatch();
-  const channelId = useSelector((state) => state.currentChannelId);
   const inputRef = useRef(null);
+
+  const channelId = useSelector((state) => state.currentChannelId);
+
   const formik = useFormik({
     initialValues: {
       text: '',
@@ -51,10 +53,9 @@ export default () => {
           onChange={formik.handleChange}
           name="text"
           ref={inputRef}
-          // disabled={formik.isSubmitting}
+          disabled={formik.isSubmitting}
         />
-        {/* <Button type="submit" variant="outline-success" disabled={formik.isSubmitting || !formik.dirty}> */}
-        <Button type="submit" variant="outline-success">
+        <Button type="submit" variant="outline-success" disabled={formik.isSubmitting || !formik.dirty}>
           {t('messages.button')}
         </Button>
       </InputGroup>
