@@ -29,7 +29,7 @@ const Channel = ({
   );
 
   return (
-    <Nav.Item as="li" className="px-2">
+    <Nav.Item as="li" className="px-2 w-100">
       {removable ? (
         <ToggleContainer isActive={isActive} onDelete={onDelete} name={name} onRename={onRename}>
           <Btn />
