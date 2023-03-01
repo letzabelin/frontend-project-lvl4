@@ -4,7 +4,9 @@
   "description": "[![Actions Status](https://github.com/letzabelin/frontend-project-lvl4/workflows/hexlet-check/badge.svg)](https://github.com/letzabelin/frontend-project-lvl4/actions)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build --prefix frontend",
+    "start": "start-server -s frontend/dist",
+    "postinstall": "cd frontend && npm ci"
   },
   "repository": {
     "type": "git",
