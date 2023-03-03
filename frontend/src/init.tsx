@@ -5,7 +5,7 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
-import { NotFound, Login } from '@/pages/index';
+import { NoMatch, Login } from '@/pages/index';
 import App from '@/components/App';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -16,7 +16,7 @@ const init = (): JSX.Element => {
       <>
         <Route path="/" element={<App />} />
         <Route path="login" element={<Login />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NoMatch />} />
       </>,
     ),
   );

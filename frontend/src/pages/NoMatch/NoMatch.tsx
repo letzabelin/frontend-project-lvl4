@@ -1,7 +1,7 @@
 import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-const NotFound = (): JSX.Element => (
+const NoMatch = (): JSX.Element => (
   <Container className="d-flex flex-column justify-content-center align-items-center vh-100">
     <h1 className="mb-3">Ошибка 404</h1>
 
@@ -25,4 +25,4 @@ const NotFound = (): JSX.Element => (
   </Container>
 );
 
-export default NotFound;
+export default NoMatch;
