@@ -1,8 +1,16 @@
 import { Link } from 'react-router-dom';
-import { Button, Card, Col, Container, FloatingLabel, Form, Image } from 'react-bootstrap';
-import profileImage from '@/assets/profile.png';
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  FloatingLabel,
+  Form,
+  Image,
+} from 'react-bootstrap';
+import profileImage from '@/assets/images/profile.png';
 
-const Login = (): JSX.Element => {
+const LoginPage = (): JSX.Element => {
   return (
     <Container className="vh-100 d-flex justify-content-center align-items-center">
       <Card className="w-50">
@@ -43,4 +51,4 @@ const Login = (): JSX.Element => {
   );
 };
 
-export default Login;
+export default LoginPage;

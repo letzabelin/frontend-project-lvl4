@@ -1,2 +1,2 @@
-export { default as Login } from '@/pages/Login/Login';
-export { default as NoMatch } from '@/pages/NoMatch/NoMatch';
+export { default as LoginPage } from '@/pages/Login';
+export { default as NoMatchPage } from '@/pages/NoMatch';

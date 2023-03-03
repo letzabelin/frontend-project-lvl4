@@ -5,7 +5,7 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
-import { NoMatch, Login } from '@/pages/index';
+import { NoMatchPage, LoginPage } from '@/pages';
 import App from '@/components/App';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,8 +15,8 @@ const init = (): JSX.Element => {
     createRoutesFromElements(
       <>
         <Route path="/" element={<App />} />
-        <Route path="login" element={<Login />} />
-        <Route path="*" element={<NoMatch />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="*" element={<NoMatchPage />} />
       </>,
     ),
   );
