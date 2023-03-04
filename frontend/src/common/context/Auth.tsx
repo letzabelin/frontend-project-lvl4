@@ -1,6 +1,7 @@
 import {
   createContext,
   ReactNode,
+  useState,
 } from 'react';
 import type { User } from '@/common/types/User';
 import useLocalStorage from '@/common/hooks/useLocalStorage';
@@ -17,18 +18,23 @@ export const AuthContext = createContext<AuthContextType>({
   logout: () => {},
 });
 
+const getExistedUser = (storageItem: string | null) => {
+  const user: User | null = storageItem ? JSON.parse(storageItem) : null;
+
+  return user;
+};
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { setStorageItem, deleteStorageItem, getStorageItem } = useLocalStorage();
-
-  const userStorageItem = getStorageItem('user');
-
-  const currentUser = userStorageItem ? JSON.parse(userStorageItem) : null;
+  const [currentUser, setCurrentUser] = useState<User | null>(getExistedUser(getStorageItem('user')));
 
   const login = (user: User) => {
+    setCurrentUser(user);
     setStorageItem('user', JSON.stringify(user));
   };
 
   const logout = () => {
+    setCurrentUser(null);
     deleteStorageItem('user');
   };
 
