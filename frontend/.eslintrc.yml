@@ -83,3 +83,5 @@ rules:
   react/jsx-props-no-spreading:
     - error
     - custom: "ignore"
+  "@typescript-eslint/no-empty-function":
+    - off

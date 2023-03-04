@@ -1,14 +1,10 @@
 import React from 'react';
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-  RouterProvider,
-} from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import { NoMatchPage, LoginPage } from '@/pages';
 import App from '@/components/App';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { AuthProvider } from '@/context/Auth';
 
 const init = (): JSX.Element => {
   const router = createBrowserRouter(
@@ -23,7 +19,9 @@ const init = (): JSX.Element => {
 
   return (
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </React.StrictMode>
   );
 };

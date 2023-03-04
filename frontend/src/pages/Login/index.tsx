@@ -1,10 +1,22 @@
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Card, Col, Container, FloatingLabel, Form, Image } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import profileImage from '@/assets/images/profile.png';
+import useAuth from '@/hooks/useAuth';
+import { useEffect, useRef, useState } from 'react';
 
 const LoginPage = (): JSX.Element => {
+  const [serverError, setServerError] = useState<string | null>(null);
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const usernameRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    usernameRef.current?.focus();
+  }, []);
+
   const loginScheme = yup.object({
     username: yup.string().trim().required().default(''),
     password: yup.string().trim().required().default(''),
@@ -14,7 +26,26 @@ const LoginPage = (): JSX.Element => {
     initialValues: loginScheme.getDefault(),
     validationSchema: loginScheme,
 
-    onSubmit: console.log,
+    async onSubmit(formData) {
+      const UNAUTHORIZED_STATUS_CODE = 401;
+
+      try {
+        const response = await axios.post('/api/v1/login', formData);
+
+        login(response.data);
+
+        navigate('/');
+      } catch (error) {
+        if (error instanceof axios.AxiosError) {
+          const errorMessage = error.response?.status === UNAUTHORIZED_STATUS_CODE
+            ? 'Неверное имя пользователя или пароль'
+            : 'Ошибка сервера';
+
+          setServerError(errorMessage);
+          usernameRef.current?.select();
+        }
+      }
+    },
   });
 
   return (
@@ -31,13 +62,21 @@ const LoginPage = (): JSX.Element => {
             <Form onSubmit={formik.handleSubmit}>
               <Form.Group className="mb-3">
                 <FloatingLabel label="Ваш ник">
-                  <Form.Control type="text" placeholder="name@example.com" required {...formik.getFieldProps('username')} />
+                  <Form.Control
+                    type="text"
+                    placeholder="name@example.com"
+                    required
+                    isInvalid={!!serverError}
+                    ref={usernameRef}
+                    {...formik.getFieldProps('username')}
+                  />
                 </FloatingLabel>
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <FloatingLabel label="Пароль">
-                  <Form.Control type="password" placeholder="Password" required {...formik.getFieldProps('password')} />
+                  <Form.Control type="password" placeholder="Password" required isInvalid={!!serverError} {...formik.getFieldProps('password')} />
+                  <Form.Control.Feedback type="invalid">{serverError}</Form.Control.Feedback>
                 </FloatingLabel>
               </Form.Group>
 
