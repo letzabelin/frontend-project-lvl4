@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AuthContext } from '@/context/Auth';
+import { AuthContext } from '@/common/context/Auth';
 
 // eslint-disable-next-line arrow-body-style
 const useAuth = () => {

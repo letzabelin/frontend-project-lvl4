@@ -2,8 +2,8 @@ import {
   createContext,
   ReactNode,
 } from 'react';
-import type { User } from '@/types/User';
-import useLocalStorage from '@/hooks/useLocalStorage';
+import type { User } from '@/common/types/User';
+import useLocalStorage from '@/common/hooks/useLocalStorage';
 
 interface AuthContextType {
   user: User | null;

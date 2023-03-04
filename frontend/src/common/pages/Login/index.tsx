@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, Card, Col, Container, FloatingLabel, Form, Image } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import profileImage from '@/assets/images/profile.png';
-import useAuth from '@/hooks/useAuth';
+import profileImage from '@/assets/images/loginProfileTemplate.png';
+import useAuth from '@/common/hooks/useAuth';
 import { useEffect, useRef, useState } from 'react';
 
 const LoginPage = (): JSX.Element => {

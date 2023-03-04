@@ -1,7 +1,7 @@
 import { useLocation, Navigate } from 'react-router-dom';
-import useAuth from '@/hooks/useAuth';
+import useAuth from '@/common/hooks/useAuth';
 
-const App = () => {
+const Chat = () => {
   const { user } = useAuth();
   const location = useLocation();
 
@@ -12,4 +12,4 @@ const App = () => {
   return <h1>This is great app. Again</h1>;
 };
 
-export default App;
+export default Chat;
