@@ -1,8 +1,5 @@
-import {
-  createContext,
-  ReactNode,
-  useState,
-} from 'react';
+import { createContext, useEffect, useMemo } from 'react';
+import { Outlet } from 'react-router-dom';
 import type { User } from '@/common/types/User';
 import useLocalStorage from '@/common/hooks/useLocalStorage';
 
@@ -18,29 +15,29 @@ export const AuthContext = createContext<AuthContextType>({
   logout: () => {},
 });
 
-const getExistedUser = (storageItem: string | null) => {
-  const user: User | null = storageItem ? JSON.parse(storageItem) : null;
+export const AuthLayout = () => {
+  const [user, setUser] = useLocalStorage<AuthContextType['user']>('user', null);
 
-  return user;
-};
-
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { setStorageItem, deleteStorageItem, getStorageItem } = useLocalStorage();
-  const [currentUser, setCurrentUser] = useState<User | null>(getExistedUser(getStorageItem('user')));
-
-  const login = (user: User) => {
-    setCurrentUser(user);
-    setStorageItem('user', JSON.stringify(user));
+  const login = (data: User): void => {
+    setUser(data);
   };
 
-  const logout = () => {
-    setCurrentUser(null);
-    deleteStorageItem('user');
+  const logout = (): void => {
+    setUser(null);
   };
+
+  const auth = useMemo(
+    () => ({
+      user,
+      login,
+      logout,
+    }),
+    [user],
+  );
 
   return (
-    <AuthContext.Provider value={{ user: currentUser, login, logout }}>
-      {children}
+    <AuthContext.Provider value={auth}>
+      <Outlet />
     </AuthContext.Provider>
   );
 };

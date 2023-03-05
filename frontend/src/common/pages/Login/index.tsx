@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Card, Col, Container, FloatingLabel, Form, Image } from 'react-bootstrap';
@@ -5,17 +6,22 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import profileImage from '@/assets/images/loginProfileTemplate.png';
 import useAuth from '@/common/hooks/useAuth';
-import { useEffect, useRef, useState } from 'react';
 
 const LoginPage = (): JSX.Element => {
   const [serverError, setServerError] = useState<string | null>(null);
-  const { login } = useAuth();
+  const auth = useAuth();
   const navigate = useNavigate();
   const usernameRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     usernameRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    if (auth.user) {
+      navigate('/', { replace: true });
+    }
+  }, [auth.user]);
 
   const loginScheme = yup.object({
     username: yup.string().trim().required().default(''),
@@ -32,14 +38,10 @@ const LoginPage = (): JSX.Element => {
       try {
         const response = await axios.post('/api/v1/login', formData);
 
-        login(response.data);
-
-        navigate('/');
+        auth.login(response.data);
       } catch (error) {
         if (error instanceof axios.AxiosError) {
-          const errorMessage = error.response?.status === UNAUTHORIZED_STATUS_CODE
-            ? 'Неверное имя пользователя или пароль'
-            : 'Ошибка сервера';
+          const errorMessage = error.response?.status === UNAUTHORIZED_STATUS_CODE ? 'Неверное имя пользователя или пароль' : 'Ошибка сервера';
 
           setServerError(errorMessage);
           usernameRef.current?.select();

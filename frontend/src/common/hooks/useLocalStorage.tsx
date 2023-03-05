@@ -1,22 +1,31 @@
-const useLocalStorage = () => {
-  const setStorageItem = (key: string, value: string): void => {
-    localStorage.setItem(key, value);
+import { useState } from 'react';
+
+const useLocalStorage = <T, >(key: string, defaultValue: T): [T, (value: T) => void] => {
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    try {
+      const value = localStorage.getItem(key);
+
+      if (value) {
+        return JSON.parse(value);
+      }
+
+      localStorage.setItem(key, JSON.stringify(defaultValue));
+
+      return defaultValue;
+    } catch (error) {
+      return defaultValue;
+    }
+  });
+
+  const setValue = (value: T) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } finally {
+      setStoredValue(value);
+    }
   };
 
-  // eslint-disable-next-line arrow-body-style
-  const getStorageItem = (key: string): string | null => {
-    return localStorage.getItem(key);
-  };
-
-  const deleteStorageItem = (key: string): void => {
-    localStorage.removeItem(key);
-  };
-
-  return {
-    setStorageItem,
-    getStorageItem,
-    deleteStorageItem,
-  };
+  return [storedValue, setValue];
 };
 
 export default useLocalStorage;
