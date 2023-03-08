@@ -5,7 +5,7 @@ import { Button, Card, Col, Container, FloatingLabel, Form, Image } from 'react-
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import profileImage from '@/assets/images/loginProfileTemplate.png';
-import useAuth from '@/common/hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 
 const LoginPage = (): JSX.Element => {
   const [serverError, setServerError] = useState<string | null>(null);
@@ -52,7 +52,7 @@ const LoginPage = (): JSX.Element => {
 
   return (
     <Container className="vh-100 d-flex justify-content-center align-items-center">
-      <Card className="w-50">
+      <Card className="w-50 shadow">
         <Card.Body className="row p-5">
           <Col className="d-flex justify-content-center align-items-center">
             <Image src={profileImage} alt="Фотография профиля" width="180" height="180" />

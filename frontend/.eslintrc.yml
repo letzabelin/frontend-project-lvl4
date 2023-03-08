@@ -85,3 +85,7 @@ rules:
     - custom: "ignore"
   "@typescript-eslint/no-empty-function":
     - off
+  react/destructuring-assignment:
+    - off
+  react/require-default-props:
+    - off

@@ -1,11 +1,11 @@
-import { createContext, useEffect, useMemo } from 'react';
+import { createContext, useMemo } from 'react';
 import { Outlet } from 'react-router-dom';
-import type { User } from '@/common/types/User';
-import useLocalStorage from '@/common/hooks/useLocalStorage';
+import type { IUser } from '@/types/User';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 interface AuthContextType {
-  user: User | null;
-  login: (user: User) => void;
+  user: IUser | null;
+  login: (user: IUser) => void;
   logout: () => void;
 }
 
@@ -18,7 +18,7 @@ export const AuthContext = createContext<AuthContextType>({
 export const AuthLayout = () => {
   const [user, setUser] = useLocalStorage<AuthContextType['user']>('user', null);
 
-  const login = (data: User): void => {
+  const login = (data: IUser): void => {
     setUser(data);
   };
 

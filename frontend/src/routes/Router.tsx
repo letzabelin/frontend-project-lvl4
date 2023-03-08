@@ -7,9 +7,9 @@ import {
   RouterProvider,
   useLocation,
 } from 'react-router-dom';
-import { ChatPage, LoginPage, NoMatchPage } from '@/common/pages';
-import useAuth from '@/common/hooks/useAuth';
-import { AuthLayout } from '@/common/context/Auth';
+import { ChatPage, LoginPage, NoMatchPage } from '@/pages';
+import useAuth from '@/hooks/useAuth';
+import { AuthLayout } from '@/context/Auth';
 
 const RequireAuthLayout = () => {
   const auth = useAuth();
