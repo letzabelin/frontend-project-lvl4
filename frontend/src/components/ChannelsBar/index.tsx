@@ -1,9 +1,19 @@
-import { Button, Container, Nav } from 'react-bootstrap';
-import { ChannelButton } from '@/components';
+import { Button, Nav } from 'react-bootstrap';
+import { Channel } from '@/components';
+import { IChannel, IChannels, ICurrentChannelId } from '@/types/Chat';
 
-const ChannelsBar = (): JSX.Element => {
+interface Props {
+  channels: IChannels;
+  currentChannelId: ICurrentChannelId;
+}
+
+const ChannelsBar = ({ channels, currentChannelId }: Props): JSX.Element => {
+  const channelComponents = channels.map((channel: IChannel) => (
+    <Channel key={channel.id} title={channel.name} removable={channel.removable} active={channel.id === currentChannelId} />
+  ));
+
   return (
-    <Container as="nav" className="d-flex flex-column h-100 p-0">
+    <nav className="d-flex flex-column h-100">
       <div className="d-flex justify-content-between align-items-center p-4 ps-4 pe-2">
         <b>Каналы</b>
 
@@ -16,19 +26,9 @@ const ChannelsBar = (): JSX.Element => {
       </div>
 
       <Nav as="ul" variant="pills" className="flex-column flex-nowrap p-2 overflow-auto d-block">
-        <Nav.Item>
-          <ChannelButton active title="general" />
-        </Nav.Item>
-
-        <Nav.Item>
-          <ChannelButton title="random" />
-        </Nav.Item>
-
-        <Nav.Item>
-          <ChannelButton removable title="removable" />
-        </Nav.Item>
+        {channelComponents}
       </Nav>
-    </Container>
+    </nav>
   );
 };
 

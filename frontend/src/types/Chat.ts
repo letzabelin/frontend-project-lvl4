@@ -1,5 +1,5 @@
 export interface IChannel {
-  id: number;
+  id: number | null;
   name: string;
   removable: boolean;
 }
@@ -16,9 +16,7 @@ export interface IMessage {
 export type IMessages = IMessage[];
 
 export interface IServerChatsResponse {
-  data: {
-    channels: IChannels;
-    currentChannelId: ICurrentChannelId;
-    messages: IMessages;
-  };
+  channels: IChannels;
+  currentChannelId: ICurrentChannelId;
+  messages: IMessages;
 }

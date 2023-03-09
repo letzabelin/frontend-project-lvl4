@@ -1,5 +1,4 @@
-import { createContext, useMemo } from 'react';
-import { Outlet } from 'react-router-dom';
+import { createContext, ReactNode, useMemo } from 'react';
 import type { IUser } from '@/types/User';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
@@ -15,7 +14,7 @@ export const AuthContext = createContext<AuthContextType>({
   logout: () => {},
 });
 
-export const AuthLayout = () => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useLocalStorage<AuthContextType['user']>('user', null);
 
   const login = (data: IUser): void => {
@@ -35,9 +34,5 @@ export const AuthLayout = () => {
     [user],
   );
 
-  return (
-    <AuthContext.Provider value={auth}>
-      <Outlet />
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };

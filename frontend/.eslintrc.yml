@@ -89,3 +89,7 @@ rules:
     - off
   react/require-default-props:
     - off
+  object-curly-newline:
+    - error
+    - ImportDeclaration:
+        minProperties: 6

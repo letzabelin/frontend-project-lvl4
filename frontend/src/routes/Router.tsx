@@ -9,7 +9,6 @@ import {
 } from 'react-router-dom';
 import { ChatPage, LoginPage, NoMatchPage } from '@/pages';
 import useAuth from '@/hooks/useAuth';
-import { AuthLayout } from '@/context/Auth';
 
 const RequireAuthLayout = () => {
   const auth = useAuth();
@@ -25,16 +24,14 @@ const RequireAuthLayout = () => {
 const Router = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route element={<AuthLayout />}>
-        <Route path="/">
-          <Route element={<RequireAuthLayout />}>
-            <Route index element={<ChatPage />} />
-          </Route>
-
-          <Route path="login" element={<LoginPage />} />
-          <Route path="*" element={<NoMatchPage />} />
+      <Route path="/">
+        <Route element={<RequireAuthLayout />}>
+          <Route index element={<ChatPage />} />
         </Route>
-      </Route>,
+
+        <Route path="login" element={<LoginPage />} />
+        <Route path="*" element={<NoMatchPage />} />
+      </Route>
     ),
   );
 

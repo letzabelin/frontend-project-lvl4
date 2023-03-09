@@ -1,2 +1,3 @@
 export { default as ChannelsBar } from './ChannelsBar';
-export { default as ChannelButton } from './ChannelButton';
+export { default as Channel } from './Channel';
+export { default as ChatBox } from './ChatBox';
