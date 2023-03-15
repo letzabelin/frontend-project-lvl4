@@ -4,7 +4,7 @@ import { IChannel, IChannels, ICurrentChannelId } from '@/types/Chat';
 
 interface Props {
   channels: IChannels;
-  currentChannelId: ICurrentChannelId;
+  currentChannelId?: ICurrentChannelId;
 }
 
 const ChannelsBar = ({ channels, currentChannelId }: Props): JSX.Element => {

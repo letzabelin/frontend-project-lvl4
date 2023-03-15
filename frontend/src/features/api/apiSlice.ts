@@ -1,8 +1,16 @@
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { createEntityAdapter, createSelector, EntityState } from '@reduxjs/toolkit';
 import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 import { createApi } from '@reduxjs/toolkit/query/react';
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import type { IUser } from '@/types/User';
-import type { IServerChatsResponse } from '@/types/Chat';
+import type { IChannel, ICurrentChannelId, IMessage, IServerChatsResponse } from '@/types/Chat';
+import { IRootState } from '@/app/store';
+
+const channelsAdapter = createEntityAdapter<IChannel>();
+const messagesAdapter = createEntityAdapter<IMessage>();
+
+const initialChannelsState = channelsAdapter.getInitialState();
+const initialMessagesAdapter = messagesAdapter.getInitialState();
 
 const axiosBaseQuery = ({
   baseUrl,
@@ -56,13 +64,67 @@ export const apiSlice = createApi({
   }),
 
   endpoints: (builder) => ({
-    getChatData: builder.query<IServerChatsResponse, void>({
+    getChatData: builder.query<{
+      channels: EntityState<IChannel>;
+      messages: EntityState<IMessage>;
+      currentChannelId: ICurrentChannelId;
+    }, void>({
       query: () => ({
         url: '/data',
         method: 'get',
       }),
+      transformResponse: ({ channels, messages, currentChannelId }: IServerChatsResponse) => ({
+        currentChannelId,
+        channels: channelsAdapter.setAll(initialChannelsState, channels),
+        messages: messagesAdapter.setAll(initialMessagesAdapter, messages),
+      }),
     }),
   }),
 });
+
+const selectChatDataResult = apiSlice.endpoints.getChatData.select();
+
+export const selectChannelsData = createSelector(
+  selectChatDataResult,
+  ({ data }) => data?.channels,
+);
+
+export const selectCurrentChannelId = createSelector(
+  selectChatDataResult,
+  ({ data }) => data?.currentChannelId,
+);
+
+export const selectMessagesData = createSelector(
+  selectChatDataResult,
+  ({ data }) => data?.messages,
+);
+
+export const selectCurrentChannel = createSelector(
+  [selectChannelsData, selectCurrentChannelId],
+  (channels, currentChannelId) => {
+    if (!currentChannelId || !channels?.entities) {
+      return null;
+    }
+
+    return channels.entities[currentChannelId];
+  },
+);
+
+export const selectMessagesByChannelId = createSelector(
+  [selectMessagesData, selectCurrentChannelId],
+  (messages, currentChannelId) => {
+    if (!currentChannelId || !messages?.entities) {
+      return [];
+    }
+
+    return messages.ids
+      .filter((id) => id === currentChannelId)
+      .flatMap((id) => messages.entities[id] ?? []);
+  },
+);
+
+export const {
+  selectAll: selectAllChannels,
+} = channelsAdapter.getSelectors((state: IRootState) => selectChannelsData(state) ?? initialChannelsState);
 
 export const { useGetChatDataQuery } = apiSlice;

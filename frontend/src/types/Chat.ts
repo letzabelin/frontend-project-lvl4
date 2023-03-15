@@ -1,10 +1,10 @@
 export interface IChannel {
-  id: number | null;
+  id: number;
   name: string;
   removable: boolean;
 }
 
-export type ICurrentChannelId = IChannel['id'];
+export type ICurrentChannelId = number;
 export type IChannels = IChannel[];
 
 export interface IMessage {
