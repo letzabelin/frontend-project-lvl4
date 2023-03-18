@@ -93,3 +93,7 @@ rules:
     - error
     - ImportDeclaration:
         minProperties: 6
+  no-shadow:
+    - off
+  "@typescript-eslint/no-shadow":
+    - error

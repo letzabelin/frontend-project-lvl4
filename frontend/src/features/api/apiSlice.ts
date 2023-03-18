@@ -1,16 +1,27 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { io } from 'socket.io-client';
 import { createEntityAdapter, createSelector, EntityState } from '@reduxjs/toolkit';
 import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import type { IUser } from '@/types/User';
-import type { IChannel, ICurrentChannelId, IMessage, IServerChatsResponse } from '@/types/Chat';
+import { IChannel, IChatEvent, ICurrentChannelId, IMessage, IServerChatsResponse } from '@/types/Chat';
 import { IRootState } from '@/app/store';
+
+const socket = io({
+  withCredentials: true,
+});
+
+const isConnectedWS = new Promise((resolve) => {
+  socket.on('connect', () => {
+    resolve(true);
+  });
+});
 
 const channelsAdapter = createEntityAdapter<IChannel>();
 const messagesAdapter = createEntityAdapter<IMessage>();
 
 const initialChannelsState = channelsAdapter.getInitialState();
-const initialMessagesAdapter = messagesAdapter.getInitialState();
+const initialMessagesState = messagesAdapter.getInitialState();
 
 const axiosBaseQuery = ({
   baseUrl,
@@ -73,10 +84,33 @@ export const apiSlice = createApi({
         url: '/data',
         method: 'get',
       }),
+
       transformResponse: ({ channels, messages, currentChannelId }: IServerChatsResponse) => ({
         currentChannelId,
         channels: channelsAdapter.setAll(initialChannelsState, channels),
-        messages: messagesAdapter.setAll(initialMessagesAdapter, messages),
+        messages: messagesAdapter.setAll(initialMessagesState, messages),
+      }),
+
+      onCacheEntryAdded: async (_, { cacheDataLoaded, updateCachedData, cacheEntryRemoved }) => {
+        await cacheDataLoaded;
+
+        await isConnectedWS;
+
+        socket.on(IChatEvent.NewMessage, (message: IMessage) => {
+          updateCachedData((draft) => {
+            messagesAdapter.upsertOne(draft.messages, message);
+          });
+        });
+
+        await cacheEntryRemoved;
+      },
+    }),
+
+    sendMessage: builder.mutation<IMessage, IMessage>({
+      queryFn: (data) => new Promise((resolve) => {
+        socket.emit(IChatEvent.NewMessage, data, (message: IMessage) => {
+          resolve({ data: message });
+        });
       }),
     }),
   }),
@@ -118,8 +152,8 @@ export const selectMessagesByChannelId = createSelector(
     }
 
     return messages.ids
-      .filter((id) => id === currentChannelId)
-      .flatMap((id) => messages.entities[id] ?? []);
+      .flatMap((id) => messages.entities[id] ?? [])
+      .filter((message) => message.channelId === currentChannelId);
   },
 );
 
@@ -127,4 +161,4 @@ export const {
   selectAll: selectAllChannels,
 } = channelsAdapter.getSelectors((state: IRootState) => selectChannelsData(state) ?? initialChannelsState);
 
-export const { useGetChatDataQuery } = apiSlice;
+export const { useGetChatDataQuery, useSendMessageMutation } = apiSlice;

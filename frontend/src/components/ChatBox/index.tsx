@@ -1,8 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { Button, InputGroup, Form } from 'react-bootstrap';
+import * as yup from 'yup';
 import { useSelector } from 'react-redux';
+import { useFormik } from 'formik';
 import { IRootState } from '@/app/store';
-import { selectCurrentChannel } from '@/features/api/apiSlice';
+import { useSendMessageMutation, selectCurrentChannel } from '@/features/api/apiSlice';
 import { IMessages } from '@/types/Chat';
 import useAuth from '@/hooks/useAuth';
 
@@ -13,6 +15,29 @@ interface Props {
 const ChatBox = ({ messages }: Props): JSX.Element => {
   const auth = useAuth();
   const currentChannel = useSelector((state: IRootState) => selectCurrentChannel(state));
+
+  const [sendMessage, { isLoading }] = useSendMessageMutation();
+
+  const messageScheme = yup.object({
+    text: yup.string().trim().required().default(''),
+  });
+
+  const formik = useFormik({
+    initialValues: messageScheme.getDefault(),
+    validationSchema: messageScheme,
+
+    async onSubmit({ text }) {
+      if (text.trim() === '' || !auth.user || !currentChannel) {
+        return;
+      }
+
+      await sendMessage({
+        text,
+        username: auth.user.username,
+        channelId: currentChannel.id,
+      });
+    },
+  });
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -46,11 +71,17 @@ const ChatBox = ({ messages }: Props): JSX.Element => {
         ))}
       </main>
 
-      <InputGroup as="footer" className="p-4 mt-auto">
-        <Form.Control placeholder="Введите сообщение..." ref={inputRef} />
+      <footer className="p-4 mt-auto">
+        <Form onSubmit={formik.handleSubmit}>
+          <InputGroup>
+            <Form.Control placeholder="Введите сообщение..." ref={inputRef} {...formik.getFieldProps('text')} />
 
-        <Button variant="outline-primary">Отправить</Button>
-      </InputGroup>
+            <Button type="submit" variant="outline-primary">
+              Отправить
+            </Button>
+          </InputGroup>
+        </Form>
+      </footer>
     </div>
   );
 };
