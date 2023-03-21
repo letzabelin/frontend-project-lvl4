@@ -1,9 +1,9 @@
 import { Button, Nav } from 'react-bootstrap';
 import { Channel } from '@/components';
-import { IChannel, IChannels, ICurrentChannelId } from '@/types/Chat';
+import { IChannel, ICurrentChannelId } from '@/types/Chat';
 
 interface Props {
-  channels: IChannels;
+  channels: IChannel[];
   currentChannelId?: ICurrentChannelId;
 }
 

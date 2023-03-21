@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 import Router from '@/routes/Router';
 import { AuthProvider } from '@/context/Auth';
-import store from './store';
+import store from '@/redux/store';
 import '@/style/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

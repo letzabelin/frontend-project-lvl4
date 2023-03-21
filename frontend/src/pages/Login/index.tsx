@@ -5,7 +5,7 @@ import { Button, Card, Col, Container, FloatingLabel, Form, Image } from 'react-
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import profileImage from '@/assets/images/loginProfileTemplate.png';
-import useAuth from '@/hooks/useAuth';
+import { useAuth } from '@/hooks';
 
 const LoginPage = (): JSX.Element => {
   const [serverError, setServerError] = useState<string | null>(null);

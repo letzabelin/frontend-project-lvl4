@@ -1,20 +1,21 @@
 import { useEffect, useRef } from 'react';
 import { Button, InputGroup, Form } from 'react-bootstrap';
 import * as yup from 'yup';
-import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { IRootState } from '@/app/store';
-import { useSendMessageMutation, selectCurrentChannel } from '@/features/api/apiSlice';
-import { IMessages } from '@/types/Chat';
-import useAuth from '@/hooks/useAuth';
+import { useSendMessageMutation } from '@/redux/api/chatWebsocketApi';
+import { ICurrentChannelId, IMessage } from '@/types/Chat';
+import { useAppSelector, useAuth } from '@/hooks';
+import { selectChannelById } from '@/redux/slices/channels/channelsSlice';
 
 interface Props {
-  messages: IMessages;
+  currentChannelId: ICurrentChannelId;
+  messages: IMessage[];
 }
 
-const ChatBox = ({ messages }: Props): JSX.Element => {
+const ChatBox = ({ messages, currentChannelId }: Props): JSX.Element => {
   const auth = useAuth();
-  const currentChannel = useSelector((state: IRootState) => selectCurrentChannel(state));
+  const currentChannel = useAppSelector((state) => selectChannelById(state, currentChannelId));
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [sendMessage, { isLoading }] = useSendMessageMutation();
 
@@ -26,7 +27,7 @@ const ChatBox = ({ messages }: Props): JSX.Element => {
     initialValues: messageScheme.getDefault(),
     validationSchema: messageScheme,
 
-    async onSubmit({ text }) {
+    async onSubmit({ text }, { resetForm }) {
       if (text.trim() === '' || !auth.user || !currentChannel) {
         return;
       }
@@ -36,10 +37,12 @@ const ChatBox = ({ messages }: Props): JSX.Element => {
         username: auth.user.username,
         channelId: currentChannel.id,
       });
+
+      resetForm();
+
+      inputRef.current?.focus();
     },
   });
-
-  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -62,7 +65,7 @@ const ChatBox = ({ messages }: Props): JSX.Element => {
         {messages.map((message) => (
           <div key={message.id} className="mb-2">
             <span className="fw-bold">
-              {auth.user?.username}
+              {message.username}
               :
               &nbsp;
             </span>
@@ -76,7 +79,7 @@ const ChatBox = ({ messages }: Props): JSX.Element => {
           <InputGroup>
             <Form.Control placeholder="Введите сообщение..." ref={inputRef} {...formik.getFieldProps('text')} />
 
-            <Button type="submit" variant="outline-primary">
+            <Button type="submit" variant="outline-primary" disabled={isLoading}>
               Отправить
             </Button>
           </InputGroup>
