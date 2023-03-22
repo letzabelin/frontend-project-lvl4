@@ -1,14 +1,22 @@
-import cn from 'classnames';
 import { Button, ButtonGroup, Dropdown, Nav } from 'react-bootstrap';
+import cn from 'classnames';
+import { useAppDispatch } from '@/hooks';
+import { changeCurrentChannel } from '@/redux/slices/channels/channelsSlice';
 
 interface Props {
+  id: number;
   title: string;
   active?: boolean;
   removable?: boolean;
 }
 
-const ChannelButton = ({ title, active, removable }: Props): JSX.Element => {
+const ChannelButton = ({ title, active, removable, id }: Props): JSX.Element => {
   const variant = active ? 'primary' : 'outline-primary';
+  const dispatch = useAppDispatch();
+
+  const changeChannel = () => {
+    dispatch(changeCurrentChannel(id));
+  };
 
   const activeClassesConfig = {
     'bg-transparent': !active,
@@ -23,7 +31,7 @@ const ChannelButton = ({ title, active, removable }: Props): JSX.Element => {
     return (
       <Nav.Item>
         <Dropdown as={ButtonGroup} className="w-100 position-static" align="end">
-          <Button className={buttonClasses}>
+          <Button className={buttonClasses} onClick={changeChannel}>
             <span className="me-1">#</span>
             {title}
           </Button>
@@ -41,7 +49,7 @@ const ChannelButton = ({ title, active, removable }: Props): JSX.Element => {
 
   return (
     <Nav.Item>
-      <Button variant={variant} className={buttonClasses}>
+      <Button variant={variant} className={buttonClasses} onClick={changeChannel}>
         <span className="me-1">#</span>
         {title}
       </Button>

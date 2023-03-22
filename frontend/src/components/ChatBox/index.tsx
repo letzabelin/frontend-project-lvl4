@@ -16,6 +16,7 @@ const ChatBox = ({ messages, currentChannelId }: Props): JSX.Element => {
   const auth = useAuth();
   const currentChannel = useAppSelector((state) => selectChannelById(state, currentChannelId));
   const inputRef = useRef<HTMLInputElement>(null);
+  const lastVisibleBlockRef = useRef<HTMLDivElement>(null);
 
   const [sendMessage, { isLoading }] = useSendMessageMutation();
 
@@ -46,7 +47,11 @@ const ChatBox = ({ messages, currentChannelId }: Props): JSX.Element => {
 
   useEffect(() => {
     inputRef.current?.focus();
-  }, []);
+  }, [currentChannelId]);
+
+  useEffect(() => {
+    lastVisibleBlockRef.current?.scrollIntoView();
+  }, [messages]);
 
   return (
     <div className="d-flex flex-column h-100">
@@ -72,6 +77,7 @@ const ChatBox = ({ messages, currentChannelId }: Props): JSX.Element => {
             {message.text}
           </div>
         ))}
+        <div ref={lastVisibleBlockRef} />
       </main>
 
       <footer className="p-4 mt-auto">

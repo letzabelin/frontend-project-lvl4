@@ -9,7 +9,13 @@ interface Props {
 
 const ChannelsBar = ({ channels, currentChannelId }: Props): JSX.Element => {
   const channelComponents = channels.map((channel: IChannel) => (
-    <Channel key={channel.id} title={channel.name} removable={channel.removable} active={channel.id === currentChannelId} />
+    <Channel
+      key={channel.id}
+      id={channel.id}
+      title={channel.name}
+      removable={channel.removable}
+      active={channel.id === currentChannelId}
+    />
   ));
 
   return (

@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/redux/store';
 import type { IChannel, ICurrentChannelId } from '@/types/Chat';
 
@@ -21,9 +21,8 @@ const channelsSlice = createSlice({
   initialState: initialChannelsInformationState,
 
   reducers: {
-    setChannels: (state, { payload }) => {
-      const rawChannels = payload as IChannel[];
-      channelsAdapter.setAll(state.channels, rawChannels);
+    setChannels: (state, { payload }: PayloadAction<IChannel[]>) => {
+      channelsAdapter.setAll(state.channels, payload);
     },
 
     addChannel: () => {},
@@ -32,10 +31,9 @@ const channelsSlice = createSlice({
 
     renameChannel: () => {},
 
-    changeCurrentChannel: (state, { payload }) => {
-      const currentChannelId = payload as ICurrentChannelId;
+    changeCurrentChannel: (state, { payload }: PayloadAction<ICurrentChannelId>) => {
       // eslint-disable-next-line no-param-reassign
-      state.currentChannelId = currentChannelId;
+      state.currentChannelId = payload;
     },
   },
 });
