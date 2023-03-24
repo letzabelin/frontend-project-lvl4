@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { selectCurrentChannelId } from '../channels/channelsSlice';
-import type { IMessage } from '@/types/Chat';
+import type { IMessage } from '@/types';
 import type { RootState } from '@/redux/store';
 
 const messagesAdapter = createEntityAdapter<IMessage>();
@@ -24,13 +24,13 @@ const messagesSlice = createSlice({
       messagesAdapter.setAll(state.messages, payload);
     },
 
-    sendMessage: (state, { payload }: PayloadAction<IMessage>) => {
+    addMessage: (state, { payload }: PayloadAction<IMessage>) => {
       messagesAdapter.addOne(state.messages, payload);
     },
   },
 });
 
-export const { setMessages, sendMessage } = messagesSlice.actions;
+export const { setMessages, addMessage } = messagesSlice.actions;
 
 const { selectAll: selectAllMessages } = messagesAdapter.getSelectors<RootState>((state) => state.messagesInformation.messages ?? initialMessagesState);
 

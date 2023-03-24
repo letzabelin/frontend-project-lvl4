@@ -31,12 +31,14 @@ const LoginPage = (): JSX.Element => {
   const formik = useFormik({
     initialValues: loginScheme.getDefault(),
     validationSchema: loginScheme,
+    validateOnBlur: false,
+    validateOnChange: false,
 
     async onSubmit(formData) {
       const UNAUTHORIZED_STATUS_CODE = 401;
 
       try {
-        const response = await axios.post('/api/v1/login', formData);
+        const response = await axios.post('/api/v1/login', loginScheme.cast(formData));
 
         auth.login(response.data);
       } catch (error) {
@@ -77,7 +79,13 @@ const LoginPage = (): JSX.Element => {
 
               <Form.Group className="mb-3">
                 <FloatingLabel label="Пароль">
-                  <Form.Control type="password" placeholder="Password" required isInvalid={!!serverError} {...formik.getFieldProps('password')} />
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    required
+                    isInvalid={!!serverError}
+                    {...formik.getFieldProps('password')}
+                  />
                   <Form.Control.Feedback type="invalid">{serverError}</Form.Control.Feedback>
                 </FloatingLabel>
               </Form.Group>

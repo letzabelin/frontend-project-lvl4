@@ -20,12 +20,11 @@ const ChannelButton = ({ title, active, removable, id }: Props): JSX.Element => 
 
   const activeClassesConfig = {
     'bg-transparent': !active,
-    'border-0': !active,
     'text-primary': !active,
   };
 
-  const buttonClasses = cn('w-100', 'rounded-0', 'text-start', 'text-truncate', activeClassesConfig);
-  const dropdownClasses = cn(activeClassesConfig);
+  const buttonClasses = cn('w-100', 'rounded-0', 'text-start', 'text-truncate', 'border-0', activeClassesConfig);
+  const dropdownClasses = cn('border-0', activeClassesConfig);
 
   if (removable) {
     return (

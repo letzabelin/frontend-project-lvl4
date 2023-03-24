@@ -1,3 +1,8 @@
+export interface IUser {
+  username: string,
+  token?: string,
+}
+
 export interface IChannel {
   id: number,
   name: string,
@@ -24,4 +29,10 @@ export enum IChatEvent {
   NewChannel = 'newChannel',
   RemoveChannel = 'removeChannel',
   RenameChannel = 'renameChannel',
+}
+
+export enum IModalTypes {
+  NewChannel = 'newChannel',
+  EditChannelName = 'editChannelName',
+  RemoveChannel = 'removeChannel',
 }

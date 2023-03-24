@@ -3,9 +3,9 @@ import { Button, InputGroup, Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useSendMessageMutation } from '@/redux/api/chatWebsocketApi';
-import { ICurrentChannelId, IMessage } from '@/types/Chat';
 import { useAppSelector, useAuth } from '@/hooks';
 import { selectChannelById } from '@/redux/slices/channels/channelsSlice';
+import type { ICurrentChannelId, IMessage } from '@/types';
 
 interface Props {
   currentChannelId: ICurrentChannelId;

@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useMemo } from 'react';
 import { useLocalStorage } from '@/hooks';
-import type { IUser } from '@/types/User';
+import type { IUser } from '@/types';
 
 interface AuthContextType {
   user: IUser | null;

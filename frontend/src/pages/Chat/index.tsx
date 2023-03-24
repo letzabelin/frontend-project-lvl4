@@ -1,11 +1,11 @@
 import { Container, Col, Row, Spinner } from 'react-bootstrap';
-import { ChannelsBar, ChatBox } from '@/components';
+import { ChannelsBar, ChatBox, Modal } from '@/components';
 import { useAppSelector } from '@/hooks';
 import { useGetChatDataQuery } from '@/redux/api/chatDataApi';
 import { selectAllChannels, selectCurrentChannelId } from '@/redux/slices/channels/channelsSlice';
 import { selectMessagesByChannelId } from '@/redux/slices/messages/messagesSlice';
-import { ICurrentChannelId } from '@/types/Chat';
 import { useGetWebsocketMessagesQuery } from '@/redux/api/chatWebsocketApi';
+import type { ICurrentChannelId } from '@/types';
 
 const ChatPage = (): JSX.Element => {
   const { isLoading, isError, isSuccess } = useGetChatDataQuery();
@@ -15,6 +15,7 @@ const ChatPage = (): JSX.Element => {
   const channels = useAppSelector(selectAllChannels);
   const messages = useAppSelector(selectMessagesByChannelId);
   const currentChannelId = useAppSelector(selectCurrentChannelId) as ICurrentChannelId;
+  const { isOpened, type } = useAppSelector((state) => state.modalsInformation);
 
   let content;
 
@@ -36,7 +37,15 @@ const ChatPage = (): JSX.Element => {
     );
   }
 
-  return <Container className="vh-100 vw-100 d-flex justify-content-center align-items-center py-4 px-0">{content}</Container>;
+  return (
+    <>
+      <Container className="vh-100 vw-100 d-flex justify-content-center align-items-center py-4 px-0">
+        {content}
+      </Container>
+
+      <Modal opened={isOpened} type={type} />
+    </>
+  );
 };
 
 export default ChatPage;

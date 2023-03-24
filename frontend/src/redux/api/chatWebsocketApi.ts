@@ -1,8 +1,9 @@
 import { io } from 'socket.io-client';
-import { IChatEvent } from '@/types/Chat';
+import { IChatEvent } from '@/types';
 import api from '../api';
-import { sendMessage } from '../slices/messages/messagesSlice';
-import type { IMessage } from '@/types/Chat';
+import { addMessage } from '../slices/messages/messagesSlice';
+import { addChannel } from '../slices/channels/channelsSlice';
+import type { IMessage, IChannel } from '@/types';
 
 const socket = io({
   withCredentials: true,
@@ -26,7 +27,13 @@ export const chatWebsocketApi = api.injectEndpoints({
 
         socket.on(IChatEvent.NewMessage, (message: IMessage) => {
           updateCachedData(() => {
-            dispatch(sendMessage(message));
+            dispatch(addMessage(message));
+          });
+        });
+
+        socket.on(IChatEvent.NewChannel, (channel: IChannel) => {
+          updateCachedData(() => {
+            dispatch(addChannel(channel));
           });
         });
 
@@ -35,14 +42,25 @@ export const chatWebsocketApi = api.injectEndpoints({
     }),
 
     sendMessage: builder.mutation<IMessage, Omit<IMessage, 'id'>>({
-      queryFn: (data) =>
+      queryFn: (data) => (
         new Promise((resolve) => {
           socket.emit(IChatEvent.NewMessage, data, (message: IMessage) => {
             resolve({ data: message });
           });
-        }),
+        })
+      ),
+    }),
+
+    addChannel: builder.mutation<IChannel, Omit<IChannel, 'id' | 'removable'>>({
+      queryFn: (data) => (
+        new Promise((resolve) => {
+          socket.emit(IChatEvent.NewChannel, data, (channel: IChannel) => {
+            resolve({ data: channel });
+          });
+        })
+      ),
     }),
   }),
 });
 
-export const { useGetWebsocketMessagesQuery, useSendMessageMutation } = chatWebsocketApi;
+export const { useGetWebsocketMessagesQuery, useSendMessageMutation, useAddChannelMutation } = chatWebsocketApi;
