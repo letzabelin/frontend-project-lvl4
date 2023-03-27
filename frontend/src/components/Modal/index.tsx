@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { Button, Form, Modal as BModal } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { closeModal } from '@/redux/slices/modals/modalsSlice';
-import { useAddChannelMutation } from '@/redux/api/chatWebsocketApi';
+import { useAddChannelMutation, useRemoveChannelMutation } from '@/redux/api/chatWebsocketApi';
 import { IModalTypes } from '@/types';
 import { selectAllChannels } from '@/redux/slices/channels/channelsSlice';
 
@@ -12,11 +12,11 @@ interface BaseModalProps {
   type: IModalTypes | null;
 }
 
-interface AddChannelModalBodyProps {
+interface ModalBodyProps {
   onClose: () => void;
 }
 
-const AddChannelModalBody = ({ onClose }: AddChannelModalBodyProps): JSX.Element => {
+const AddChannelModalBody = ({ onClose }: ModalBodyProps): JSX.Element => {
   const channelNames = useAppSelector(selectAllChannels).map(({ name }) => name);
   const [addChannel, { isLoading }] = useAddChannelMutation();
 
@@ -66,6 +66,43 @@ const AddChannelModalBody = ({ onClose }: AddChannelModalBodyProps): JSX.Element
   );
 };
 
+const RemoveChannelModalBody = ({ onClose }: ModalBodyProps) => {
+  const channelId = useAppSelector((state) => state.modalsInformation.extra);
+  const [removeChannel, { isLoading }] = useRemoveChannelMutation();
+
+  const removeChannelHandler = () => {
+    if (!channelId) {
+      return;
+    }
+
+    removeChannel({ id: channelId });
+
+    onClose();
+  };
+
+  return (
+    <>
+      <BModal.Header closeButton onHide={onClose}>
+        <BModal.Title>Удалить канал</BModal.Title>
+      </BModal.Header>
+
+      <BModal.Body>
+        Вы уверены?
+      </BModal.Body>
+
+      <BModal.Footer>
+        <Button variant="danger" onClick={onClose}>
+          Отменить
+        </Button>
+
+        <Button onClick={removeChannelHandler} disabled={isLoading}>
+          Удалить
+        </Button>
+      </BModal.Footer>
+    </>
+  );
+};
+
 const Modal = ({ opened, type }: BaseModalProps): JSX.Element => {
   const dispatch = useAppDispatch();
 
@@ -76,6 +113,7 @@ const Modal = ({ opened, type }: BaseModalProps): JSX.Element => {
   return (
     <BModal show={opened} dialogClassName="modal-90w" centered onHide={closeHandler}>
       {type === IModalTypes.NewChannel && <AddChannelModalBody onClose={closeHandler} />}
+      {type === IModalTypes.RemoveChannel && <RemoveChannelModalBody onClose={closeHandler} />}
     </BModal>
   );
 };

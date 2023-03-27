@@ -2,6 +2,8 @@ import { Button, ButtonGroup, Dropdown, Nav } from 'react-bootstrap';
 import cn from 'classnames';
 import { useAppDispatch } from '@/hooks';
 import { changeCurrentChannel } from '@/redux/slices/channels/channelsSlice';
+import { openModal } from '@/redux/slices/modals/modalsSlice';
+import { IModalTypes } from '@/types';
 
 interface Props {
   id: number;
@@ -15,7 +17,11 @@ const ChannelButton = ({ title, active, removable, id }: Props): JSX.Element => 
   const dispatch = useAppDispatch();
 
   const changeChannel = () => {
-    dispatch(changeCurrentChannel(id));
+    dispatch(changeCurrentChannel({ id }));
+  };
+
+  const openRemoveChannelForm = () => {
+    dispatch(openModal({ type: IModalTypes.RemoveChannel, extra: id }));
   };
 
   const activeClassesConfig = {
@@ -39,7 +45,7 @@ const ChannelButton = ({ title, active, removable, id }: Props): JSX.Element => 
 
           <Dropdown.Menu id="dropdown-split-basic">
             <Dropdown.Item>Переименовать</Dropdown.Item>
-            <Dropdown.Item>Удалить</Dropdown.Item>
+            <Dropdown.Item onClick={openRemoveChannelForm}>Удалить</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Nav.Item>

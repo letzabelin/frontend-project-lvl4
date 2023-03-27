@@ -1,14 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { IModalTypes } from '@/types';
+import type { IChannel, IModalTypes } from '@/types';
 
 interface ModalState {
   isOpened: boolean;
   type: IModalTypes | null;
+  extra: IChannel['id'] | null;
 }
 
 const initialModalsState: ModalState = {
   isOpened: false,
   type: null,
+  extra: null,
 };
 
 const modalsSlice = createSlice({
@@ -17,11 +19,13 @@ const modalsSlice = createSlice({
   initialState: initialModalsState,
 
   reducers: {
-    openModal: (state, { payload }: PayloadAction<IModalTypes>) => {
+    openModal: (state, { payload }: PayloadAction<{type: IModalTypes, extra?: IChannel['id'] }>) => {
       // eslint-disable-next-line no-param-reassign
       state.isOpened = true;
       // eslint-disable-next-line no-param-reassign
-      state.type = payload;
+      state.type = payload.type;
+      // eslint-disable-next-line no-param-reassign
+      state.extra = payload.extra ?? null;
     },
 
     closeModal: (state) => {
@@ -29,6 +33,8 @@ const modalsSlice = createSlice({
       state.isOpened = false;
       // eslint-disable-next-line no-param-reassign
       state.type = null;
+      // eslint-disable-next-line no-param-reassign
+      state.extra = null;
     },
   },
 });

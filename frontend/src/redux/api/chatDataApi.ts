@@ -21,9 +21,9 @@ export const chatDataApi = api.injectEndpoints({
       onQueryStarted: async (_arg, { queryFulfilled, dispatch }) => {
         const { data } = await queryFulfilled;
 
-        dispatch(setChannels(data.channels));
-        dispatch(changeCurrentChannel(data.currentChannelId));
-        dispatch(setMessages(data.messages));
+        dispatch(setChannels({ channels: data.channels }));
+        dispatch(changeCurrentChannel({ id: data.currentChannelId }));
+        dispatch(setMessages({ messages: data.messages }));
       },
     }),
   }),

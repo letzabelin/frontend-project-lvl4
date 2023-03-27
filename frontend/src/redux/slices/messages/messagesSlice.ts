@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { selectCurrentChannelId } from '../channels/channelsSlice';
+import { selectCurrentChannelId, removeChannel } from '../channels/channelsSlice';
 import type { IMessage } from '@/types';
 import type { RootState } from '@/redux/store';
 
@@ -20,13 +20,23 @@ const messagesSlice = createSlice({
   initialState: initialMessagesInformationState,
 
   reducers: {
-    setMessages: (state, { payload }: PayloadAction<IMessage[]>) => {
-      messagesAdapter.setAll(state.messages, payload);
+    setMessages: (state, { payload }: PayloadAction<{ messages: IMessage[] }>) => {
+      messagesAdapter.setAll(state.messages, payload.messages);
     },
 
-    addMessage: (state, { payload }: PayloadAction<IMessage>) => {
-      messagesAdapter.addOne(state.messages, payload);
+    addMessage: (state, { payload }: PayloadAction<{ message: IMessage }>) => {
+      messagesAdapter.addOne(state.messages, payload.message);
     },
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(removeChannel, (state, { payload }) => {
+      const messagesIds = Object.values(state.messages.entities)
+        .filter((message) => message?.channelId === payload.id)
+        .flatMap((message) => message?.id ?? []);
+
+      messagesAdapter.removeMany(state.messages, messagesIds);
+    });
   },
 });
 

@@ -14,7 +14,7 @@ const ChannelsBar = ({ channels, currentChannelId }: Props): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const openNewChannelForm = () => {
-    dispatch(openModal(IModalTypes.NewChannel));
+    dispatch(openModal({ type: IModalTypes.NewChannel }));
   };
 
   const channelComponents = channels.map((channel: IChannel) => (

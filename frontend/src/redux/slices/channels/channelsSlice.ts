@@ -21,28 +21,34 @@ const channelsSlice = createSlice({
   initialState: initialChannelsInformationState,
 
   reducers: {
-    setChannels: (state, { payload }: PayloadAction<IChannel[]>) => {
-      channelsAdapter.setAll(state.channels, payload);
+    setChannels: (state, { payload }: PayloadAction<{ channels: IChannel[]}>) => {
+      channelsAdapter.setAll(state.channels, payload.channels);
     },
 
-    addChannel: (state, { payload }: PayloadAction<IChannel>) => {
-      channelsAdapter.addOne(state.channels, payload);
+    addChannel: (state, { payload }: PayloadAction<{ channel: IChannel }>) => {
+      channelsAdapter.addOne(state.channels, payload.channel);
       // eslint-disable-next-line
-      state.currentChannelId = payload.id;
+      state.currentChannelId = payload.channel.id;
     },
 
-    removeChannel: () => {},
+    removeChannel: (state, { payload }: PayloadAction<{ id: IChannel['id'] }>) => {
+      const defaultChannelId = 1;
+
+      channelsAdapter.removeOne(state.channels, payload.id);
+      // eslint-disable-next-line
+      state.currentChannelId = defaultChannelId;
+    },
 
     renameChannel: () => {},
 
-    changeCurrentChannel: (state, { payload }: PayloadAction<ICurrentChannelId>) => {
+    changeCurrentChannel: (state, { payload }: PayloadAction<{ id: ICurrentChannelId }>) => {
       // eslint-disable-next-line no-param-reassign
-      state.currentChannelId = payload;
+      state.currentChannelId = payload.id;
     },
   },
 });
 
-export const { addChannel, setChannels, changeCurrentChannel } = channelsSlice.actions;
+export const { addChannel, setChannels, changeCurrentChannel, removeChannel } = channelsSlice.actions;
 
 export const { selectAll: selectAllChannels, selectById: selectChannelById } = channelsAdapter.getSelectors<RootState>(
   (state) => state.channelsInformation.channels,
