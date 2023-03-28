@@ -31,7 +31,7 @@ const channelsSlice = createSlice({
       state.currentChannelId = payload.channel.id;
     },
 
-    removeChannel: (state, { payload }: PayloadAction<{ id: IChannel['id'] }>) => {
+    removeChannel: (state, { payload }: PayloadAction<Pick<IChannel, 'id'>>) => {
       const defaultChannelId = 1;
 
       channelsAdapter.removeOne(state.channels, payload.id);
@@ -39,7 +39,14 @@ const channelsSlice = createSlice({
       state.currentChannelId = defaultChannelId;
     },
 
-    renameChannel: () => {},
+    renameChannel: (state, { payload }: PayloadAction<Pick<IChannel, 'id' | 'name'>>) => {
+      channelsAdapter.updateOne(state.channels, {
+        id: payload.id,
+        changes: {
+          name: payload.name,
+        },
+      });
+    },
 
     changeCurrentChannel: (state, { payload }: PayloadAction<{ id: ICurrentChannelId }>) => {
       // eslint-disable-next-line no-param-reassign
@@ -48,7 +55,13 @@ const channelsSlice = createSlice({
   },
 });
 
-export const { addChannel, setChannels, changeCurrentChannel, removeChannel } = channelsSlice.actions;
+export const {
+  addChannel,
+  setChannels,
+  changeCurrentChannel,
+  removeChannel,
+  renameChannel,
+} = channelsSlice.actions;
 
 export const { selectAll: selectAllChannels, selectById: selectChannelById } = channelsAdapter.getSelectors<RootState>(
   (state) => state.channelsInformation.channels,

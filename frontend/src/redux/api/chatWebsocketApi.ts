@@ -2,7 +2,7 @@ import { io } from 'socket.io-client';
 import { IChatEvent } from '@/types';
 import api from '../api';
 import { addMessage } from '../slices/messages/messagesSlice';
-import { addChannel, removeChannel } from '../slices/channels/channelsSlice';
+import { addChannel, removeChannel, renameChannel } from '../slices/channels/channelsSlice';
 import type { IMessage, IChannel } from '@/types';
 
 const socket = io({
@@ -37,9 +37,15 @@ export const chatWebsocketApi = api.injectEndpoints({
           });
         });
 
-        socket.on(IChatEvent.RemoveChannel, ({ id: channelId }: Pick<IChannel, 'id'>) => {
+        socket.on(IChatEvent.RemoveChannel, ({ id }: Pick<IChannel, 'id'>) => {
           updateCachedData(() => {
-            dispatch(removeChannel({ id: channelId }));
+            dispatch(removeChannel({ id }));
+          });
+        });
+
+        socket.on(IChatEvent.RenameChannel, ({ id, name }: Pick<IChannel, 'id' | 'name'>) => {
+          updateCachedData(() => {
+            dispatch(renameChannel({ id, name }));
           });
         });
 
@@ -76,6 +82,16 @@ export const chatWebsocketApi = api.injectEndpoints({
         })
       ),
     }),
+
+    renameChannel: builder.mutation<Pick<IChannel, 'id' | 'name'>, Pick<IChannel, 'id' | 'name'>>({
+      queryFn: (data) => (
+        new Promise((resolve) => {
+          socket.emit(IChatEvent.RenameChannel, data, () => {
+            resolve({ data });
+          });
+        })
+      ),
+    }),
   }),
 });
 
@@ -84,4 +100,5 @@ export const {
   useSendMessageMutation,
   useAddChannelMutation,
   useRemoveChannelMutation,
+  useRenameChannelMutation,
 } = chatWebsocketApi;

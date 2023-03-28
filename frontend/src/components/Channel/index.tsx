@@ -24,6 +24,10 @@ const ChannelButton = ({ title, active, removable, id }: Props): JSX.Element => 
     dispatch(openModal({ type: IModalTypes.RemoveChannel, extra: id }));
   };
 
+  const openEditChannelNameForm = () => {
+    dispatch(openModal({ type: IModalTypes.EditChannelName, extra: id }));
+  };
+
   const activeClassesConfig = {
     'bg-transparent': !active,
     'text-primary': !active,
@@ -44,7 +48,7 @@ const ChannelButton = ({ title, active, removable, id }: Props): JSX.Element => 
           <Dropdown.Toggle split variant={variant} id="dropdown-split-basic" className={dropdownClasses} />
 
           <Dropdown.Menu id="dropdown-split-basic">
-            <Dropdown.Item>Переименовать</Dropdown.Item>
+            <Dropdown.Item onClick={openEditChannelNameForm}>Переименовать</Dropdown.Item>
             <Dropdown.Item onClick={openRemoveChannelForm}>Удалить</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
