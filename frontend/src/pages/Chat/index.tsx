@@ -39,7 +39,7 @@ const ChatPage = (): JSX.Element => {
 
   return (
     <>
-      <Container className="vh-100 vw-100 d-flex justify-content-center align-items-center py-4 px-0">
+      <Container className="d-flex justify-content-center align-items-center py-4 px-0 h-100 overflow-auto">
         {content}
       </Container>
 

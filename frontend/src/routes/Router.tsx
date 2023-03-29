@@ -7,10 +7,18 @@ import {
   RouterProvider,
   useLocation,
 } from 'react-router-dom';
+import { Header } from '@/components';
 import { ChatPage, LoginPage, NoMatchPage, SignupPage } from '@/pages';
 import { useAuth } from '@/hooks';
 
-const RequireAuthLayout = () => {
+const MainLayout = (): JSX.Element => (
+  <div className="d-flex flex-column vh-100">
+    <Header />
+    <Outlet />
+  </div>
+);
+
+const RequireAuthLayout = (): JSX.Element => {
   const auth = useAuth();
   const location = useLocation();
 
@@ -24,7 +32,7 @@ const RequireAuthLayout = () => {
 const Router = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/">
+      <Route path="/" element={<MainLayout />}>
         <Route element={<RequireAuthLayout />}>
           <Route index element={<ChatPage />} />
         </Route>

@@ -53,7 +53,7 @@ const LoginPage = (): JSX.Element => {
   });
 
   return (
-    <Container className="vh-100 d-flex justify-content-center align-items-center">
+    <Container className="d-flex justify-content-center align-items-center h-100">
       <Card className="w-50 shadow">
         <Card.Body className="row p-5">
           <Col className="d-flex justify-content-center align-items-center">

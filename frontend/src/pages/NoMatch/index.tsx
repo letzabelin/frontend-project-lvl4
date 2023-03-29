@@ -2,7 +2,7 @@ import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const NoMatchPage = (): JSX.Element => (
-  <Container className="d-flex flex-column justify-content-center align-items-center vh-100">
+  <Container className="d-flex flex-column justify-content-center align-items-center h-100">
     <h1 className="mb-3">Ошибка 404</h1>
 
     <p className="fw-bold mb-2">Что случилось?</p>
