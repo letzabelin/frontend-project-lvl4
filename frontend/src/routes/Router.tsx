@@ -7,7 +7,7 @@ import {
   RouterProvider,
   useLocation,
 } from 'react-router-dom';
-import { ChatPage, LoginPage, NoMatchPage } from '@/pages';
+import { ChatPage, LoginPage, NoMatchPage, SignupPage } from '@/pages';
 import { useAuth } from '@/hooks';
 
 const RequireAuthLayout = () => {
@@ -30,6 +30,7 @@ const Router = () => {
         </Route>
 
         <Route path="login" element={<LoginPage />} />
+        <Route path="signup" element={<SignupPage />} />
         <Route path="*" element={<NoMatchPage />} />
       </Route>
     ),
