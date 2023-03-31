@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { Button, ButtonGroup, Dropdown, Nav } from 'react-bootstrap';
 import cn from 'classnames';
 import { useAppDispatch } from '@/hooks';
@@ -12,7 +13,7 @@ interface Props {
   removable?: boolean;
 }
 
-const ChannelButton = ({ title, active, removable, id }: Props): JSX.Element => {
+const Channel = forwardRef<HTMLDivElement, Props>(({ title, active, removable, id }, ref) => {
   const variant = active ? 'primary' : 'outline-primary';
   const dispatch = useAppDispatch();
 
@@ -38,7 +39,7 @@ const ChannelButton = ({ title, active, removable, id }: Props): JSX.Element => 
 
   if (removable) {
     return (
-      <Nav.Item>
+      <Nav.Item ref={ref}>
         <Dropdown as={ButtonGroup} className="w-100 position-static" align="end">
           <Button className={buttonClasses} onClick={changeChannel}>
             <span className="me-1">#</span>
@@ -57,13 +58,15 @@ const ChannelButton = ({ title, active, removable, id }: Props): JSX.Element => 
   }
 
   return (
-    <Nav.Item>
+    <Nav.Item ref={ref}>
       <Button variant={variant} className={buttonClasses} onClick={changeChannel}>
         <span className="me-1">#</span>
         {title}
       </Button>
     </Nav.Item>
   );
-};
+});
 
-export default ChannelButton;
+Channel.displayName = 'Channel';
+
+export default Channel;

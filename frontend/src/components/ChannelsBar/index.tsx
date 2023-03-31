@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { Button, Nav } from 'react-bootstrap';
 import { Channel } from '@/components';
 import { useAppDispatch } from '@/hooks';
@@ -12,10 +13,15 @@ interface Props {
 
 const ChannelsBar = ({ channels, currentChannelId }: Props): JSX.Element => {
   const dispatch = useAppDispatch();
+  const channelRef = useRef<HTMLDivElement>(null);
 
   const openNewChannelForm = () => {
     dispatch(openModal({ type: IModalTypes.NewChannel }));
   };
+
+  useEffect(() => {
+    channelRef.current?.scrollIntoView();
+  }, [currentChannelId]);
 
   const channelComponents = channels.map((channel: IChannel) => (
     <Channel
@@ -24,6 +30,7 @@ const ChannelsBar = ({ channels, currentChannelId }: Props): JSX.Element => {
       title={channel.name}
       removable={channel.removable}
       active={channel.id === currentChannelId}
+      ref={channel.id === currentChannelId ? channelRef : null}
     />
   ));
 
