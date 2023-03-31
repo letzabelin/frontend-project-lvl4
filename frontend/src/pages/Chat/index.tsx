@@ -1,4 +1,5 @@
 import { Container, Col, Row, Spinner } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { AxiosError } from 'axios';
 import { ChannelsBar, ChatBox, Modal } from '@/components';
 import { useAppSelector, useAuth } from '@/hooks';
@@ -11,6 +12,7 @@ import type { ICurrentChannelId } from '@/types';
 const ChatPage = (): JSX.Element => {
   const { isLoading, isError, isSuccess, error } = useGetChatDataQuery();
   const auth = useAuth();
+  const { t } = useTranslation();
 
   useGetWebsocketMessagesQuery(undefined);
 
@@ -31,7 +33,7 @@ const ChatPage = (): JSX.Element => {
       auth.logout();
     }
 
-    content = <h1>Oops, something went wrong:</h1>;
+    content = <h1>{t('chatPage.errors.server')}</h1>;
   } else if (isSuccess) {
     content = (
       <Row className="w-100 h-100 shadow">

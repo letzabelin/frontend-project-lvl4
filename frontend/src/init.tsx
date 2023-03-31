@@ -1,10 +1,7 @@
-import { StrictMode } from 'react';
 import App from '@/app/App';
 
 const init = (): JSX.Element => (
-  <StrictMode>
-    <App />
-  </StrictMode>
+  <App />
 );
 
 export default init;

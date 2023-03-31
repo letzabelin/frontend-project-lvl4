@@ -1,28 +1,31 @@
 import { Container } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-const NoMatchPage = (): JSX.Element => (
-  <Container className="d-flex flex-column justify-content-center align-items-center h-100">
-    <h1 className="mb-3">Ошибка 404</h1>
+const NoMatchPage = (): JSX.Element => {
+  const { t } = useTranslation();
 
-    <p className="fw-bold mb-2">Что случилось?</p>
+  return (
+    <Container className="d-flex flex-column justify-content-center align-items-center h-100">
+      <h1 className="mb-3">{t('noMatchPage.title')}</h1>
 
-    <p>Вы попали на страницу, которой не существует</p>
+      <p className="fw-bold mb-2">{t('noMatchPage.whatsHappenedQuestion')}</p>
 
-    <p className="fw-bold mb-2">Почему это произошло?</p>
+      <p>{t('noMatchPage.whatsHappenedAnswer')}</p>
 
-    <p>
-      В большинстве ситуаций ошибка 404 отображается, если связь с сервером установлена, но информации по заданному запросу нет. Возможно, в адресе опечатка —
-      такое случается при ручном наборе. Или страница была удалена, но сохранилась в закладках вашего браузера
-    </p>
+      <p className="fw-bold mb-2">{t('noMatchPage.whyHappenedQuestion')}</p>
 
-    <p className="fw-bold mb-2">Что делать?</p>
+      <p className="text-center">{t('noMatchPage.whyHappenedAnswer')}</p>
 
-    <p>
-      <span>Поскольку мы не знаем, как и откуда вы попали на эту страницу, то рекомендуем начать </span>
-      <Link to="/">с главной</Link>
-    </p>
-  </Container>
-);
+      <p className="fw-bold mb-2">{t('noMatchPage.whatToDoQuestion')}</p>
+
+      <p>
+        <span>{t('noMatchPage.whatToDoAnswer')}</span>
+        &nbsp;
+        <Link to="/">{t('noMatchPage.linkToHome')}</Link>
+      </p>
+    </Container>
+  );
+};
 
 export default NoMatchPage;

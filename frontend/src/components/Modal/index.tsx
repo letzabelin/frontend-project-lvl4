@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { Button, Form, Modal as BModal } from 'react-bootstrap';
@@ -21,11 +22,16 @@ interface ModalBodyProps {
 const AddChannelModalBody = ({ onClose }: ModalBodyProps): JSX.Element => {
   const channelNames = useAppSelector(selectAllChannels).map(({ name }) => name);
   const [addChannel, { isLoading }] = useAddChannelMutation();
+  const { t } = useTranslation();
 
   const channelScheme = yup.object({
-    name: yup.string().trim().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов')
-      .notOneOf(channelNames, 'Должно быть уникальным')
-      .required('Обязательное поле')
+    name: yup
+      .string()
+      .trim()
+      .min(3, t('common.errors.atLeast3AndLess20Characters') as string)
+      .max(20, t('common.errors.atLeast3AndLess20Characters') as string)
+      .notOneOf(channelNames, t('common.errors.unique') as string)
+      .required(t('common.errors.required') as string)
       .default(''),
   });
 
@@ -47,7 +53,7 @@ const AddChannelModalBody = ({ onClose }: ModalBodyProps): JSX.Element => {
   return (
     <Form onSubmit={formik.handleSubmit}>
       <BModal.Header closeButton onHide={onClose}>
-        <BModal.Title>Добавить канал</BModal.Title>
+        <BModal.Title>{t('chatPage.modals.addChannel.title')}</BModal.Title>
       </BModal.Header>
 
       <BModal.Body>
@@ -59,11 +65,11 @@ const AddChannelModalBody = ({ onClose }: ModalBodyProps): JSX.Element => {
 
       <BModal.Footer>
         <Button variant="danger" onClick={onClose}>
-          Отменить
+          {t('chatPage.modals.common.cancelButton')}
         </Button>
 
         <Button type="submit" disabled={isLoading}>
-          Добавить
+          {t('chatPage.modals.addChannel.submitButton')}
         </Button>
       </BModal.Footer>
     </Form>
@@ -73,6 +79,7 @@ const AddChannelModalBody = ({ onClose }: ModalBodyProps): JSX.Element => {
 const RemoveChannelModalBody = ({ onClose }: ModalBodyProps): JSX.Element => {
   const channelId = useAppSelector((state) => state.modalsInformation.extra);
   const [removeChannel, { isLoading }] = useRemoveChannelMutation();
+  const { t } = useTranslation();
 
   const removeChannelHandler = () => {
     if (!channelId) {
@@ -87,20 +94,18 @@ const RemoveChannelModalBody = ({ onClose }: ModalBodyProps): JSX.Element => {
   return (
     <>
       <BModal.Header closeButton onHide={onClose}>
-        <BModal.Title>Удалить канал</BModal.Title>
+        <BModal.Title>{t('chatPage.modals.removeChannel.title')}</BModal.Title>
       </BModal.Header>
 
-      <BModal.Body>
-        Вы уверены?
-      </BModal.Body>
+      <BModal.Body>{t('chatPage.modals.removeChannel.confirmMessage')}</BModal.Body>
 
       <BModal.Footer>
         <Button variant="danger" onClick={onClose}>
-          Отменить
+          {t('chatPage.modals.common.cancelButton')}
         </Button>
 
         <Button onClick={removeChannelHandler} disabled={isLoading}>
-          Удалить
+          {t('chatPage.modals.removeChannel.submitButton')}
         </Button>
       </BModal.Footer>
     </>
@@ -113,13 +118,18 @@ const EditChannelNameModalBody = ({ onClose }: ModalBodyProps): JSX.Element => {
   const currentChannel = useAppSelector((state) => selectChannelById(state, channelId));
   const [renameChannel, { isLoading }] = useRenameChannelMutation();
   const formControlRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     formControlRef.current?.select();
   }, []);
 
   const channelScheme = yup.object({
-    name: yup.string().trim().notOneOf(channelNames, 'Должно быть уникальным').required('Обязательное поле')
+    name: yup
+      .string()
+      .trim()
+      .notOneOf(channelNames, t('common.errors.unique') as string)
+      .required(t('common.errors.required') as string)
       .default(currentChannel?.name ?? ''),
   });
 
@@ -144,7 +154,7 @@ const EditChannelNameModalBody = ({ onClose }: ModalBodyProps): JSX.Element => {
   return (
     <Form onSubmit={formik.handleSubmit}>
       <BModal.Header closeButton onHide={onClose}>
-        <BModal.Title>Добавить канал</BModal.Title>
+        <BModal.Title>{t('chatPage.modals.renameChannel.title')}</BModal.Title>
       </BModal.Header>
 
       <BModal.Body>
@@ -156,11 +166,11 @@ const EditChannelNameModalBody = ({ onClose }: ModalBodyProps): JSX.Element => {
 
       <BModal.Footer>
         <Button variant="danger" onClick={onClose}>
-          Отменить
+          {t('chatPage.modals.common.cancelButton')}
         </Button>
 
         <Button type="submit" disabled={isLoading}>
-          Переименовать
+          {t('chatPage.modals.renameChannel.submitButton')}
         </Button>
       </BModal.Footer>
     </Form>

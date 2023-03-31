@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Button, Nav } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { Channel } from '@/components';
 import { useAppDispatch } from '@/hooks';
 import { openModal } from '@/redux/slices/modals/modalsSlice';
@@ -14,6 +15,7 @@ interface Props {
 const ChannelsBar = ({ channels, currentChannelId }: Props): JSX.Element => {
   const dispatch = useAppDispatch();
   const channelRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
 
   const openNewChannelForm = () => {
     dispatch(openModal({ type: IModalTypes.NewChannel }));
@@ -37,7 +39,7 @@ const ChannelsBar = ({ channels, currentChannelId }: Props): JSX.Element => {
   return (
     <nav className="d-flex flex-column h-100">
       <div className="d-flex justify-content-between align-items-center p-4 ps-4 pe-2">
-        <b>Каналы</b>
+        <b>{t('chatPage.channels.title')}</b>
 
         <Button variant="outline-primary" className="d-flex text-primary border-0 bg-transparent p-0" onClick={openNewChannelForm}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">

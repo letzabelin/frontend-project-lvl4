@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Card, Col, Container, FloatingLabel, Form, Image } from 'react-bootstrap';
@@ -12,6 +13,7 @@ const LoginPage = (): JSX.Element => {
   const auth = useAuth();
   const navigate = useNavigate();
   const usernameRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     usernameRef.current?.focus();
@@ -43,7 +45,9 @@ const LoginPage = (): JSX.Element => {
         auth.login(response.data);
       } catch (error) {
         if (error instanceof axios.AxiosError) {
-          const errorMessage = error.response?.status === UNAUTHORIZED_STATUS_CODE ? 'Неверное имя пользователя или пароль' : 'Ошибка сервера';
+          const errorMessage = error.response?.status === UNAUTHORIZED_STATUS_CODE
+            ? t('loginPage.form.errors.invalidUsernameOrPassword')
+            : t('loginPage.form.errors.server');
 
           setServerError(errorMessage);
           usernameRef.current?.select();
@@ -57,15 +61,15 @@ const LoginPage = (): JSX.Element => {
       <Card className="w-50 shadow">
         <Card.Body className="row p-5">
           <Col className="d-flex justify-content-center align-items-center">
-            <Image src={profileImage} alt="Фотография профиля" width="180" height="180" />
+            <Image src={profileImage} alt={t('loginPage.form.imageAlt') as string} width="180" height="180" />
           </Col>
 
           <Col>
-            <h1 className="text-center mb-3">Войти</h1>
+            <h1 className="text-center mb-3">{t('loginPage.form.title')}</h1>
 
             <Form onSubmit={formik.handleSubmit}>
               <Form.Group className="mb-3">
-                <FloatingLabel label="Ваш ник">
+                <FloatingLabel label={t('loginPage.form.usernameLabel')}>
                   <Form.Control
                     type="text"
                     placeholder="name@example.com"
@@ -78,7 +82,7 @@ const LoginPage = (): JSX.Element => {
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <FloatingLabel label="Пароль">
+                <FloatingLabel label={t('loginPage.form.passwordLabel')}>
                   <Form.Control
                     type="password"
                     placeholder="Password"
@@ -91,15 +95,18 @@ const LoginPage = (): JSX.Element => {
               </Form.Group>
 
               <Button className="w-100" variant="outline-primary" type="submit">
-                Войти
+                {t('loginPage.form.submitButton')}
               </Button>
             </Form>
           </Col>
         </Card.Body>
 
         <Card.Footer className="p-4 text-center">
-          <span>Нет аккаунта?&nbsp;</span>
-          <Link to="/signup">Регистрация</Link>
+          <span>
+            {t('loginPage.form.noAccount')}
+            &nbsp;
+          </span>
+          <Link to="/signup">{t('signupPage.form.title')}</Link>
         </Card.Footer>
       </Card>
     </Container>

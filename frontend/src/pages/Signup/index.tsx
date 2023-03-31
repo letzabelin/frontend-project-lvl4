@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -20,6 +21,7 @@ const SignupPage = (): JSX.Element => {
   const auth = useAuth();
   const navigate = useNavigate();
   const usernameRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     usernameRef.current?.focus();
@@ -32,12 +34,18 @@ const SignupPage = (): JSX.Element => {
   }, [auth.user]);
 
   const signupScheme = yup.object({
-    username: yup.string().trim().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов')
+    username: yup.string().trim()
+      .min(3, t('common.errors.atLeast3AndLess20Characters') as string)
+      .max(20, t('common.errors.atLeast3AndLess20Characters') as string)
       .required()
       .default(''),
-    password: yup.string().trim().min(6, 'Не менее 6 символов').required()
+    password: yup.string().trim()
+      .min(6, t('signupPage.form.errors.password.atLeast6Characters') as string)
+      .required()
       .default(''),
-    confirmPassword: yup.string().oneOf([yup.ref('password')], 'Пароли должны совпадать').default(''),
+    confirmPassword: yup.string()
+      .oneOf([yup.ref('password')], t('signupPage.form.errors.confirmPassword.oneOf') as string)
+      .default(''),
   });
 
   const formik = useFormik({
@@ -55,7 +63,9 @@ const SignupPage = (): JSX.Element => {
         auth.login(response.data);
       } catch (error) {
         if (error instanceof axios.AxiosError) {
-          const errorMessage = error.response?.status === CONFLICT_STATUS_CODE ? 'Такой пользователь уже существует' : 'Ошибка сервера';
+          const errorMessage = error.response?.status === CONFLICT_STATUS_CODE
+            ? t('signupPage.form.errors.userAlreadyExist')
+            : t('signupPage.form.errors.server');
 
           setServerError(errorMessage);
         }
@@ -68,15 +78,15 @@ const SignupPage = (): JSX.Element => {
       <Card className="w-50 shadow">
         <Card.Body className="row p-5">
           <Col className="d-flex justify-content-center align-items-center">
-            <Image src={profileImage} alt="Фотография профиля" width="180" height="180" />
+            <Image src={profileImage} alt={t('signupPage.form.imageAlt') as string} width="180" height="180" />
           </Col>
 
           <Col>
-            <h1 className="text-center mb-3">Регистрация</h1>
+            <h1 className="text-center mb-3">{t('signupPage.form.title')}</h1>
 
             <Form onSubmit={formik.handleSubmit}>
               <Form.Group className="mb-3">
-                <FloatingLabel label="Имя пользователя">
+                <FloatingLabel label={t('signupPage.form.usernameLabel')}>
                   <Form.Control
                     type="text"
                     placeholder="name@example.com"
@@ -90,7 +100,7 @@ const SignupPage = (): JSX.Element => {
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <FloatingLabel label="Пароль">
+                <FloatingLabel label={t('signupPage.form.passwordLabel')}>
                   <Form.Control
                     type="password"
                     placeholder="Password"
@@ -103,7 +113,7 @@ const SignupPage = (): JSX.Element => {
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <FloatingLabel label="Подтвердите пароль">
+                <FloatingLabel label={t('signupPage.form.confirmPassword')}>
                   <Form.Control
                     type="password"
                     placeholder="Password"
@@ -117,15 +127,18 @@ const SignupPage = (): JSX.Element => {
               </Form.Group>
 
               <Button className="w-100" variant="outline-primary" type="submit">
-                Зарегистрироваться
+                {t('signupPage.form.submitButton')}
               </Button>
             </Form>
           </Col>
         </Card.Body>
 
         <Card.Footer className="p-4 text-center">
-          <span>Есть аккаунт?&nbsp;</span>
-          <Link to="/login">Войти</Link>
+          <span>
+            {t('signupPage.form.hasAccount')}
+            &nbsp;
+          </span>
+          <Link to="/login">{t('loginPage.form.title')}</Link>
         </Card.Footer>
       </Card>
     </Container>

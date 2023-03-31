@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, InputGroup, Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
@@ -17,6 +18,7 @@ const ChatBox = ({ messages, currentChannelId }: Props): JSX.Element => {
   const currentChannel = useAppSelector((state) => selectChannelById(state, currentChannelId));
   const inputRef = useRef<HTMLInputElement>(null);
   const lastVisibleBlockRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
 
   const [sendMessage, { isLoading }] = useSendMessageMutation();
 
@@ -61,8 +63,7 @@ const ChatBox = ({ messages, currentChannelId }: Props): JSX.Element => {
           {currentChannel?.name ?? 'unknown'}
         </p>
         <span className="text-muted">
-          {messages.length}
-          &nbsp;сообщений
+          {t('chatPage.chatBox.messagesCount', { count: messages.length })}
         </span>
       </header>
 
@@ -83,10 +84,10 @@ const ChatBox = ({ messages, currentChannelId }: Props): JSX.Element => {
       <footer className="p-4 mt-auto">
         <Form onSubmit={formik.handleSubmit}>
           <InputGroup>
-            <Form.Control placeholder="Введите сообщение..." ref={inputRef} {...formik.getFieldProps('text')} />
+            <Form.Control placeholder={t('chatPage.chatBox.messagePlaceholder') as string} ref={inputRef} {...formik.getFieldProps('text')} />
 
             <Button type="submit" variant="outline-primary" disabled={isLoading}>
-              Отправить
+              {t('chatPage.chatBox.submitButton')}
             </Button>
           </InputGroup>
         </Form>

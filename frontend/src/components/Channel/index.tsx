@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, ButtonGroup, Dropdown, Nav } from 'react-bootstrap';
 import cn from 'classnames';
 import { useAppDispatch } from '@/hooks';
@@ -16,6 +17,7 @@ interface Props {
 const Channel = forwardRef<HTMLDivElement, Props>(({ title, active, removable, id }, ref) => {
   const variant = active ? 'primary' : 'outline-primary';
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const changeChannel = () => {
     dispatch(changeCurrentChannel({ id }));
@@ -49,8 +51,8 @@ const Channel = forwardRef<HTMLDivElement, Props>(({ title, active, removable, i
           <Dropdown.Toggle split variant={variant} id="dropdown-split-basic" className={dropdownClasses} />
 
           <Dropdown.Menu id="dropdown-split-basic">
-            <Dropdown.Item onClick={openEditChannelNameForm}>Переименовать</Dropdown.Item>
-            <Dropdown.Item onClick={openRemoveChannelForm}>Удалить</Dropdown.Item>
+            <Dropdown.Item onClick={openEditChannelNameForm}>{t('chatPage.channels.actions.rename')}</Dropdown.Item>
+            <Dropdown.Item onClick={openRemoveChannelForm}>{t('chatPage.channels.actions.remove')}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Nav.Item>

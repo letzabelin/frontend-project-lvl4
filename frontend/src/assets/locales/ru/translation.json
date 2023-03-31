@@ -1,0 +1,110 @@
+{
+  "common": {
+    "header": {
+      "logo": "Hexlet Chat",
+      "logout": "Выйти"
+    },
+
+    "errors": {
+      "atLeast3AndLess20Characters": "От 3 до 20 символов",
+      "unique": "Должно быть уникальным",
+      "required": "Обязательное поле"
+    }
+  },
+
+  "noMatchPage": {
+    "title": "Ошибка 404",
+    "whatsHappenedQuestion": "Что случилось?",
+    "whatsHappenedAnswer": "Вы попали на страницу, которой не существует",
+    "whyHappenedQuestion": "Почему это произошло?",
+    "whyHappenedAnswer": "В большинстве ситуаций ошибка 404 отображается, если связь с сервером установлена, но информации по заданному запросу нет. Возможно, в адресе опечатка — такое случается при ручном наборе. Или страница была удалена, но сохранилась в закладках вашего браузера",
+    "whatToDoQuestion": "Что делать?",
+    "whatToDoAnswer": "Поскольку мы не знаем, как и откуда вы попали на эту страницу, то рекомендуем начать ",
+    "linkToHome": "с главной"
+  },
+
+  "loginPage": {
+    "form": {
+      "title": "Войти",
+      "usernameLabel": "Ваш ник",
+      "passwordLabel": "Пароль",
+      "submitButton": "Войти",
+      "noAccount": "Нет аккаунта?",
+      "imageAlt": "Фотография профиля",
+
+      "errors": {
+        "invalidUsernameOrPassword": "Неверное имя пользователя или пароль",
+        "server": "Ошибка сервера"
+      }
+    }
+  },
+
+  "signupPage": {
+    "form": {
+      "title": "Регистрация",
+      "imageAlt": "Фотография профиля",
+      "usernameLabel": "Имя пользователя",
+      "passwordLabel": "Пароль",
+      "confirmPassword": "Подтвердите пароль",
+      "submitButton": "Зарегистрироваться",
+      "hasAccount": "Есть аккаунт?",
+
+      "errors": {
+        "password": {
+          "atLeast6Characters": "Не менее 6 символов"
+        },
+        "confirmPassword": {
+          "oneOf": "Пароли должны совпадать"
+        },
+        "userAlreadyExist": "Такой пользователь уже существует",
+        "server": "Ошибка сервера"
+      }
+    }
+  },
+
+  "chatPage": {
+    "errors": {
+      "server": "Ошибка сервера"
+    },
+
+    "channels": {
+      "title": "Каналы",
+
+      "actions": {
+        "rename": "Переименовать",
+        "remove": "Удалить"
+      }
+    },
+
+    "chatBox": {
+      "messagesCount_zero": "{{ count }} сообщений",
+      "messagesCount_one": "{{ count }} сообщение",
+      "messagesCount_few": "{{ count }} сообщения",
+      "messagesCount_many": "{{ count }} сообщений",
+      "messagePlaceholder": "Введите сообщение...",
+      "submitButton": "Отправить"
+    },
+
+    "modals": {
+      "common": {
+        "cancelButton": "Отменить"
+      },
+
+      "addChannel": {
+        "title": "Добавить канал",
+        "submitButton": "Добавить"
+      },
+
+      "renameChannel": {
+        "title": "Переименовать канал",
+        "submitButton": "Переименовать"
+      },
+
+      "removeChannel": {
+        "title": "Удалить канал",
+        "confirmMessage": "Вы уверены?",
+        "submitButton": "Удалить"
+      }
+    }
+  }
+}
