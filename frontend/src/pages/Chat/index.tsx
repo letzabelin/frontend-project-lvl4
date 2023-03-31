@@ -1,6 +1,7 @@
 import { Container, Col, Row, Spinner } from 'react-bootstrap';
+import { AxiosError } from 'axios';
 import { ChannelsBar, ChatBox, Modal } from '@/components';
-import { useAppSelector } from '@/hooks';
+import { useAppSelector, useAuth } from '@/hooks';
 import { useGetChatDataQuery } from '@/redux/api/chatDataApi';
 import { selectAllChannels, selectCurrentChannelId } from '@/redux/slices/channels/channelsSlice';
 import { selectMessagesByChannelId } from '@/redux/slices/messages/messagesSlice';
@@ -8,7 +9,8 @@ import { useGetWebsocketMessagesQuery } from '@/redux/api/chatWebsocketApi';
 import type { ICurrentChannelId } from '@/types';
 
 const ChatPage = (): JSX.Element => {
-  const { isLoading, isError, isSuccess } = useGetChatDataQuery();
+  const { isLoading, isError, isSuccess, error } = useGetChatDataQuery();
+  const auth = useAuth();
 
   useGetWebsocketMessagesQuery(undefined);
 
@@ -22,6 +24,13 @@ const ChatPage = (): JSX.Element => {
   if (isLoading) {
     content = <Spinner animation="border" variant="primary" />;
   } else if (isError) {
+    const UNAUTHORIZED_STATUS_CODE = 401;
+    const axiosError = error as AxiosError;
+
+    if (axiosError.status === UNAUTHORIZED_STATUS_CODE) {
+      auth.logout();
+    }
+
     content = <h1>Oops, something went wrong:</h1>;
   } else if (isSuccess) {
     content = (

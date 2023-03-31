@@ -35,8 +35,11 @@ const channelsSlice = createSlice({
       const defaultChannelId = 1;
 
       channelsAdapter.removeOne(state.channels, payload.id);
-      // eslint-disable-next-line
-      state.currentChannelId = defaultChannelId;
+
+      if (state.currentChannelId === payload.id) {
+        // eslint-disable-next-line
+        state.currentChannelId = defaultChannelId;
+      }
     },
 
     renameChannel: (state, { payload }: PayloadAction<Pick<IChannel, 'id' | 'name'>>) => {
